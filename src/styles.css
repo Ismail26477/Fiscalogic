@@ -4,8 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,500,20,1;0,9..144,500,20,1&family=Inter:wght@400;500;600;700;800&display=swap");
-
 /*
  * Design system definition.
  *
@@ -67,6 +65,7 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-danger: var(--danger);
+  --color-navy: var(--navy);
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", sans-serif;
   --font-mono: "DM Mono", monospace;
@@ -113,6 +112,7 @@
   --success: oklch(0.6271 0.1699 149.2);
   --warning: oklch(0.6658 0.1574 58.3);
   --danger: oklch(0.5771 0.2152 27.3);
+  --navy: oklch(0.2393 0.0581 256.7);
 }
 
 .dark {
