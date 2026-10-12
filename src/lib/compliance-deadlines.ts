@@ -11,7 +11,7 @@ export const complianceDeadlines: ComplianceDeadline[] = [
   { id: "gst", title: "GSTR-3B", day: 20 },
   { id: "tds", title: "TDS deposit", day: 7, label: "30 April for March deductions" },
   { id: "pf", title: "PF / ESI", day: 15 },
-  { id: "advance", title: "Advance tax", day: 15, months: [5, 8, 11, 2] },
+  { id: "advance", title: "Advance tax", day: 15, months: [2, 5, 8, 11] },
 ];
 
 const IST_OFFSET_MINUTES = 330;
