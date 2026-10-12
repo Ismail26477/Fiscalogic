@@ -11,7 +11,7 @@ export const complianceDeadlines: ComplianceDeadline[] = [
   { id: "gst", title: "GSTR-3B", day: 20 },
   { id: "tds", title: "TDS deposit", day: 7, label: "30 April for March deductions" },
   { id: "pf", title: "PF / ESI", day: 15 },
-  { id: "advance", title: "Advance tax", day: 15, months: [5, 8, 11, 2] },
+  { id: "advance", title: "Advance tax", day: 15, months: [2, 5, 8, 11] },
 ];
 
 const IST_OFFSET_MINUTES = 330;
@@ -36,20 +36,35 @@ function utcFromIst(year: number, month: number, day: number) {
 
 export function nextDeadlineAt(deadline: ComplianceDeadline, timestamp: number): number {
   const ist = getIstParts(timestamp);
-  const dueMonth = deadline.months
-    ? deadline.months.find((month) => month >= ist.month) ?? deadline.months[0]
-    : ist.month;
+  if (deadline.months) {
+    let candidates = deadline.months
+      .map((month) => utcFromIst(ist.year, month, deadline.day))
+      .filter((dueAt) => dueAt > timestamp);
+    if (candidates.length === 0) {
+      candidates = deadline.months.map((month) => utcFromIst(ist.year + 1, month, deadline.day));
+    }
+    return Math.min(...candidates);
+  }
+
+  const dueDay = deadline.id === "tds" && ist.month === 3 ? 30 : deadline.day;
+  let dueMonth = ist.month;
   let year = ist.year;
-  if (deadline.months && dueMonth < ist.month) year += 1;
-  let dueAt = utcFromIst(year, dueMonth, deadline.day);
+  let dueAt = utcFromIst(year, dueMonth, dueDay);
   if (dueAt <= timestamp) {
-    if (deadline.months) {
-      const nextIndex = deadline.months.indexOf(dueMonth) + 1;
-      const nextMonth = deadline.months[nextIndex % deadline.months.length];
-      year += nextIndex >= deadline.months.length ? 1 : 0;
-      dueAt = utcFromIst(year, nextMonth, deadline.day);
-    } else {
-      dueAt = utcFromIst(year, dueMonth + 1, deadline.day);
+    dueMonth += 1;
+    if (dueMonth > 11) {
+      dueMonth = 0;
+      year += 1;
+    }
+    const nextDay = deadline.id === "tds" && dueMonth === 3 ? 30 : deadline.day;
+    dueAt = utcFromIst(year, dueMonth, nextDay);
+    if (dueAt <= timestamp) {
+      dueMonth += 1;
+      if (dueMonth > 11) {
+        dueMonth = 0;
+        year += 1;
+      }
+      dueAt = utcFromIst(year, dueMonth, deadline.day);
     }
   }
   return dueAt;
