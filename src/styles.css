@@ -68,7 +68,7 @@
   --color-navy: var(--navy);
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", sans-serif;
-  --font-mono: "DM Mono", monospace;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 :root {

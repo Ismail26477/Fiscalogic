@@ -100,7 +100,7 @@ export function ContactPage() {
   const turnover = watch("turnover");
   const onSubmit = handleSubmit(async () => {
     await new Promise((resolve) => window.setTimeout(resolve, 250));
-    toast.success("Thanks—your details are ready for Fiscalogic to review.", { description: "This preview does not send or store submissions. Connect a backend before collecting real inquiries." });
+    toast.message("Contact form preview", { description: "Your details were checked in this browser only. Nothing was sent or stored." });
   });
   return <><PageHeading eyebrow="Contact · Start with a conversation" title={<>Let's make the numbers <em className="text-primary">make sense.</em></>} detail="Tell us what your business needs. We’ll start with a free 30-minute conversation and a clear next step." />
     <section className="bg-surface"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:py-16 lg:grid-cols-[1fr_.75fr] lg:px-8"><div className="rounded-sm border border-border bg-background p-5 sm:p-8"><p className="font-mono text-xs text-primary">TELL US A LITTLE ABOUT YOUR BUSINESS</p><form onSubmit={onSubmit} noValidate className="mt-6 space-y-5">

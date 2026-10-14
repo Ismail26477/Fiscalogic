@@ -37,35 +37,29 @@ function utcFromIst(year: number, month: number, day: number) {
 export function nextDeadlineAt(deadline: ComplianceDeadline, timestamp: number): number {
   const ist = getIstParts(timestamp);
   if (deadline.months) {
-    let candidates = deadline.months
-      .map((month) => utcFromIst(ist.year, month, deadline.day))
-      .filter((dueAt) => dueAt > timestamp);
-    if (candidates.length === 0) {
-      candidates = deadline.months.map((month) => utcFromIst(ist.year + 1, month, deadline.day));
-    }
-    return Math.min(...candidates);
+    return [ist.year, ist.year + 1]
+      .flatMap((year) => deadline.months?.map((month) => utcFromIst(year, month, deadline.day)) ?? [])
+      .filter((dueAt) => dueAt > timestamp)
+      .reduce((closest, dueAt) => Math.min(closest, dueAt), Number.POSITIVE_INFINITY);
   }
 
-  const dueDay = deadline.id === "tds" && ist.month === 3 ? 30 : deadline.day;
+  if (deadline.id === "tds") {
+    const candidates = [ist.year, ist.year + 1].flatMap((year) => [
+      ...Array.from({ length: 12 }, (_, month) => utcFromIst(year, month, deadline.day)),
+      utcFromIst(year, 3, 30),
+    ]);
+    return candidates
+      .filter((dueAt) => dueAt > timestamp)
+      .reduce((closest, dueAt) => Math.min(closest, dueAt), Number.POSITIVE_INFINITY);
+  }
+
   let dueMonth = ist.month;
   let year = ist.year;
-  let dueAt = utcFromIst(year, dueMonth, dueDay);
+  let dueAt = utcFromIst(year, dueMonth, deadline.day);
   if (dueAt <= timestamp) {
     dueMonth += 1;
-    if (dueMonth > 11) {
-      dueMonth = 0;
-      year += 1;
-    }
-    const nextDay = deadline.id === "tds" && dueMonth === 3 ? 30 : deadline.day;
-    dueAt = utcFromIst(year, dueMonth, nextDay);
-    if (dueAt <= timestamp) {
-      dueMonth += 1;
-      if (dueMonth > 11) {
-        dueMonth = 0;
-        year += 1;
-      }
-      dueAt = utcFromIst(year, dueMonth, deadline.day);
-    }
+    if (dueMonth > 11) { dueMonth = 0; year += 1; }
+    dueAt = utcFromIst(year, dueMonth, deadline.day);
   }
   return dueAt;
 }

@@ -7,7 +7,8 @@ import {
   X, Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { toast } from "sonner";
+import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { site, navItems } from "@/config/site";
 
 export function Wordmark({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
@@ -50,12 +51,12 @@ export function SiteHeader() {
           <div className="flex justify-end xl:hidden">
             <Sheet>
               <SheetTrigger asChild><Button variant="outline" size="icon" className="min-h-11 min-w-11" aria-label="Open navigation"><Menu /></Button></SheetTrigger>
-              <SheetContent side="right" className="flex w-[min(88vw,420px)] flex-col gap-0 p-0">
+              <SheetContent side="right" className="flex w-full flex-col gap-0 p-0 sm:max-w-lg">
                 <div className="border-b border-border p-6"><SheetTitle className="text-left"><Wordmark /></SheetTitle><p className="mt-2 text-sm text-muted-foreground">Your numbers, made logical.</p></div>
                 <nav aria-label="Mobile navigation" className="flex-1 overflow-y-auto px-6 py-4">
-                  {navItems.map((item, index) => <Link key={item.to} to={item.to} className="flex items-center justify-between border-b border-border py-4 font-display text-xl text-navy" activeProps={{ className: "text-primary" }}><span><span className="mr-3 font-mono text-xs text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>{item.label}</span><ChevronRight className="size-4" /></Link>)}
+                  {navItems.map((item, index) => <SheetClose asChild key={item.to}><Link to={item.to} className="flex items-center justify-between border-b border-border py-4 font-display text-xl text-navy" activeProps={{ className: "text-primary" }}><span><span className="mr-3 font-mono text-xs text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>{item.label}</span><ChevronRight className="size-4" /></Link></SheetClose>)}
                 </nav>
-                <div className="space-y-3 border-t border-border p-6"><p className="text-sm text-muted-foreground">{site.contact.address}<br />{site.contact.officeHours}</p><Button asChild className="w-full rounded-sm"><Link to="/contact">Book a free call <ArrowRight /></Link></Button></div>
+                <div className="space-y-3 border-t border-border p-6"><p className="text-sm text-muted-foreground">{site.contact.address}<br />{site.contact.officeHours}</p><SheetClose asChild><Button asChild className="w-full rounded-sm"><Link to="/contact">Book a free call <ArrowRight /></Link></Button></SheetClose></div>
               </SheetContent>
             </Sheet>
           </div>
@@ -71,15 +72,15 @@ export function SiteFooter() {
   return <footer className="bg-navy text-background">
     <div className="border-b border-background/15"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
       <div><p className="font-display text-2xl">Good reminders. Fewer surprises.</p><p className="mt-1 text-sm text-background/70">Monthly compliance notes, without the noise.</p></div>
-      <form className="flex w-full max-w-md gap-2" onSubmit={(event) => { event.preventDefault(); if (email.includes("@")) setSubscribed(true); }}>
+      <form className="flex w-full max-w-md gap-2" onSubmit={(event) => { event.preventDefault(); if (email.includes("@")) toast.message("Newsletter preview", { description: "This preview does not store your address or send emails." }); }}>
         <label className="sr-only" htmlFor="newsletter-email">Email address</label><input id="newsletter-email" type="email" required value={email} onChange={(event) => { setEmail(event.target.value); setSubscribed(false); }} placeholder="you@company.com" className="h-11 min-w-0 flex-1 rounded-sm border border-background/30 bg-background/10 px-3 text-sm text-background placeholder:text-background/60 focus-visible:outline-background" />
-        <Button type="submit" variant="secondary" className="h-11 rounded-sm px-4">{subscribed ? "Noted" : "Subscribe"}</Button>
+        <Button type="submit" variant="secondary" className="h-11 rounded-sm px-4">Subscribe</Button>
       </form>
     </div></div>
     <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.1fr_1.1fr] lg:px-8">
       <div><Wordmark light /><p className="mt-4 max-w-xs text-sm leading-6 text-background/70">Your numbers, made logical. A senior CA-led finance team for businesses ready to grow.</p><div className="mt-5 flex gap-4 text-background/75">{[["LinkedIn", "https://linkedin.com"], ["Instagram", "https://instagram.com"], ["X", "https://x.com"], ["Facebook", "https://facebook.com"]].map(([label, url]) => <a key={label} className="tick-link text-xs" href={url} target="_blank" rel="noreferrer" aria-label={label}>{label}</a>)}</div></div>
       <div><p className="font-mono text-xs text-background/50">EXPLORE</p><div className="mt-4 flex flex-col gap-3 text-sm">{navItems.map((item) => <Link key={item.to} to={item.to} className="text-background/75 hover:text-background">{item.label}</Link>)}<Link to="/privacy" className="text-background/75 hover:text-background">Privacy</Link><Link to="/terms" className="text-background/75 hover:text-background">Terms</Link></div></div>
-      <div><p className="font-mono text-xs text-background/50">SERVICES</p><div className="mt-4 grid gap-3 text-sm">{[["Accounting", "/services#takeover"], ["GST & tax", "/services#gst"], ["Payroll", "/services#payroll"], ["MIS reporting", "/services#mis"], ["Audit readiness", "/services#audit"]].map(([label, to]) => <Link key={to} to={to} className="text-background/75 hover:text-background">{label}</Link>)}</div></div>
+      <div><p className="font-mono text-xs text-background/50">SERVICES</p><div className="mt-4 grid gap-3 text-sm">{[["Accounting", "takeover"], ["GST & tax", "gst"], ["Payroll", "payroll"], ["MIS reporting", "mis"], ["Audit readiness", "audit"]].map(([label, hash]) => <Link key={hash} to="/services" hash={hash} className="text-background/75 hover:text-background">{label}</Link>)}</div></div>
       <div><p className="font-mono text-xs text-background/50">FIND US</p><div className="mt-4 space-y-3 text-sm text-background/75"><p>{site.contact.address}</p><a href={`mailto:${site.contact.email}`} className="block hover:text-background">{site.contact.email}</a><p>{site.contact.phone}</p><p>{site.contact.officeHours}</p></div></div>
     </div>
     <div className="border-t border-background/15"><div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-5 text-xs text-background/55 sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© 2026 Fiscalogic. All rights reserved.</span><span>Checked. Reconciled. <span className="text-background">Fiscalogic ✓</span></span></div></div>
