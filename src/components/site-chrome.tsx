@@ -11,6 +11,30 @@ import { toast } from "sonner";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { site, navItems } from "@/config/site";
 import teamPhoto from "@/assets/fiscalogic-team.jpg";
+import heroLedger from "@/assets/fiscalogic-hero-ledger.png";
+import heroFounder from "@/assets/fiscalogic-hero-founder.png";
+import heroPlanning from "@/assets/fiscalogic-hero-planning.png";
+
+const heroImages = [
+  { src: teamPhoto, alt: "A chartered accountant and business owner reviewing business accounts together" },
+  { src: heroLedger, alt: "Hands reviewing an organized financial ledger on a desk" },
+  { src: heroFounder, alt: "A founder and finance advisor reviewing business numbers together" },
+  { src: heroPlanning, alt: "A financial planning desk with charts, notes and a calculator" },
+];
+
+export function HeroImageSlider() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(() => setActiveIndex((index) => (index + 1) % heroImages.length), 5000);
+    return () => window.clearInterval(timer);
+  }, []);
+  return <>
+    {heroImages.map((image, index) => <img key={image.alt} src={image.src} alt={image.alt} width={1536} height={1024} fetchPriority={index === 0 ? "high" : undefined} className={`absolute inset-0 -z-20 h-full w-full object-cover transition-opacity duration-1000 ${index === activeIndex ? "opacity-100" : "opacity-0"}`} />)}
+    <div className="absolute bottom-6 right-5 z-10 flex gap-2 sm:bottom-8 sm:right-8" aria-label="Hero image slides">
+      {heroImages.map((image, index) => <button key={image.alt} type="button" aria-label={`Show hero image ${index + 1}`} aria-pressed={index === activeIndex} onClick={() => setActiveIndex(index)} className={`h-1.5 rounded-full transition-all ${index === activeIndex ? "w-8 bg-primary" : "w-4 bg-background/60 hover:bg-background"}`} />)}
+    </div>
+  </>;
+}
 
 export function Wordmark({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
   return (
@@ -109,7 +133,7 @@ export function TickList({ items }: { items: readonly string[] }) {
 
 export function PageHeading({ eyebrow, title, detail }: { eyebrow: string; title: React.ReactNode; detail: string }) {
   return <section className="relative isolate flex min-h-[calc(100svh-7rem)] items-end overflow-hidden bg-navy text-background">
-    <img src={teamPhoto} alt="Fiscalogic team reviewing business accounts together" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+    <HeroImageSlider />
     <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,25,34,.9),rgba(8,25,34,.58)_48%,rgba(8,25,34,.18))]" />
     <div className="mx-auto w-full max-w-7xl px-5 pb-14 pt-28 sm:pb-20 sm:pt-36 lg:px-8 lg:pb-24"><p className="font-mono text-xs uppercase tracking-[0.12em] text-primary-foreground/80">{eyebrow}</p><h1 className="mt-5 max-w-4xl font-display text-5xl leading-[1.05] text-background sm:text-6xl lg:text-7xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-background/80">{detail}</p></div>
   </section>;

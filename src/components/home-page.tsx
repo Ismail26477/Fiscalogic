@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { site, services, problems, faqs, industries } from "@/config/site";
 import { countdownTone, complianceDeadlines, formatCountdown, nextDeadlineAt } from "@/lib/compliance-deadlines";
-import { iconMap, PageHeading, PrimaryLink, SectionIntro, TickList } from "@/components/site-chrome";
+import { HeroImageSlider, iconMap, PageHeading, PrimaryLink, SectionIntro, TickList } from "@/components/site-chrome";
 import teamPhoto from "@/assets/fiscalogic-team.jpg";
 
 function ComplianceBoard() {
@@ -45,7 +45,7 @@ function ComplianceBoard() {
 function HomePage() {
   return <>
     <section className="ledger-grid relative isolate min-h-[calc(100svh-7rem)] overflow-hidden border-b border-border/70 bg-navy text-background">
-      <img src={teamPhoto} alt="A chartered accountant and business owner reviewing accounts together" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+      <HeroImageSlider />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,25,34,.94),rgba(8,25,34,.64)_52%,rgba(8,25,34,.2))]" />
       <div className="relative z-10 mx-auto grid min-h-[calc(100svh-7rem)] max-w-7xl items-center gap-12 px-5 pb-14 pt-16 sm:pb-20 sm:pt-24 lg:grid-cols-[1.03fr_.97fr] lg:gap-16 lg:px-8 lg:pb-24 lg:pt-28">
         <div className="relative z-10">
