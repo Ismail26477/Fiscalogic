@@ -44,16 +44,18 @@ function ComplianceBoard() {
 
 function HomePage() {
   return <>
-    <section className="ledger-grid relative overflow-hidden border-b border-border/70 bg-[radial-gradient(ellipse_at_82%_25%,color-mix(in_oklch,var(--color-soft-tint)_72%,transparent),transparent_46%)]">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pb-14 pt-16 sm:pb-20 sm:pt-24 lg:grid-cols-[1.03fr_.97fr] lg:gap-16 lg:px-8 lg:pb-24 lg:pt-28">
+    <section className="ledger-grid relative isolate min-h-[calc(100svh-7rem)] overflow-hidden border-b border-border/70 bg-navy text-background">
+      <img src={teamPhoto} alt="A chartered accountant and business owner reviewing accounts together" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,25,34,.94),rgba(8,25,34,.64)_52%,rgba(8,25,34,.2))]" />
+      <div className="relative z-10 mx-auto grid min-h-[calc(100svh-7rem)] max-w-7xl items-center gap-12 px-5 pb-14 pt-16 sm:pb-20 sm:pt-24 lg:grid-cols-[1.03fr_.97fr] lg:gap-16 lg:px-8 lg:pb-24 lg:pt-28">
         <div className="relative z-10">
           <p className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-background/90 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-primary sm:text-xs"><Check className="size-3.5" /> CA-led finance team · Nagpur, Maharashtra</p>
-          <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] text-navy sm:text-6xl lg:text-7xl">You built a business, not a <em className="text-primary">bookkeeping</em> habit.</h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
+          <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] text-background sm:text-6xl lg:text-7xl">You built a business, not a <em className="text-primary">bookkeeping</em> habit.</h1>
+          <p className="mt-6 max-w-xl text-base leading-7 text-background/80 sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"><PrimaryLink /><Button asChild variant="outline" className="h-12 rounded-sm px-5"><a href="#how-it-works">See how we work <ArrowDown /></a></Button></div>
-          <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-border/80 pt-6">
+          <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-background/25 pt-6">
             <div className="flex -space-x-2" aria-hidden="true">{["C", "F", "B"].map((letter, index) => <span key={letter} className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${index === 1 ? "bg-soft-tint text-primary" : index === 2 ? "bg-secondary text-navy" : "bg-primary text-primary-foreground"}`}>{letter}</span>)}</div>
-            <div><p className="text-sm font-medium text-navy">Trusted by growing businesses across India</p><p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">★★★★★ <span className="ml-1 text-muted-foreground">Placeholder rating</span></p></div>
+            <div><p className="text-sm font-medium text-background">Trusted by growing businesses across India</p><p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">★★★★★ <span className="ml-1 text-muted-foreground">Placeholder rating</span></p></div>
           </div>
         </div>
         <div className="relative mx-auto w-full max-w-xl lg:max-w-none">

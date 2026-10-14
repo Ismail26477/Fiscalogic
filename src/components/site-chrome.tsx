@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { site, navItems } from "@/config/site";
+import teamPhoto from "@/assets/fiscalogic-team.jpg";
 
 export function Wordmark({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
   return (
@@ -107,7 +108,11 @@ export function TickList({ items }: { items: readonly string[] }) {
 }
 
 export function PageHeading({ eyebrow, title, detail }: { eyebrow: string; title: React.ReactNode; detail: string }) {
-  return <div className="mx-auto max-w-7xl px-5 pb-14 pt-16 sm:pb-20 sm:pt-24 lg:px-8"><p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">{eyebrow}</p><h1 className="mt-5 max-w-4xl font-display text-5xl leading-[1.05] text-navy sm:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">{detail}</p></div>;
+  return <section className="relative isolate flex min-h-[calc(100svh-7rem)] items-end overflow-hidden bg-navy text-background">
+    <img src={teamPhoto} alt="Fiscalogic team reviewing business accounts together" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+    <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,25,34,.9),rgba(8,25,34,.58)_48%,rgba(8,25,34,.18))]" />
+    <div className="mx-auto w-full max-w-7xl px-5 pb-14 pt-28 sm:pb-20 sm:pt-36 lg:px-8 lg:pb-24"><p className="font-mono text-xs uppercase tracking-[0.12em] text-primary-foreground/80">{eyebrow}</p><h1 className="mt-5 max-w-4xl font-display text-5xl leading-[1.05] text-background sm:text-6xl lg:text-7xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-background/80">{detail}</p></div>
+  </section>;
 }
 
 export function SectionIntro({ index, label, title, detail }: { index: string; label: string; title: React.ReactNode; detail?: string }) {
