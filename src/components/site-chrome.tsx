@@ -60,6 +60,28 @@ export function SiteHeader() {
   );
 }
 
+const pageCtaContent = {
+  "/services": { image: "/cta-services.png", alt: "Accounting desk with ledger and calculator", eyebrow: "Ready when you are", title: "A clearer way to handle the numbers.", detail: "Bring us the messy middle. We’ll bring you a finance desk that keeps moving." },
+  "/industries": { image: "/cta-industries.png", alt: "Business owner reviewing inventory with an advisor", eyebrow: "Built around your business", title: "Finance that understands the work behind the numbers.", detail: "Get practical support shaped around how your business actually earns, spends and grows." },
+  "/why-fiscalogic": { image: "/cta-why-fiscalogic.png", alt: "Professionals reviewing a financial plan together", eyebrow: "The calm starts here", title: "A better rhythm for your back office.", detail: "Replace last-minute scrambles with a finance partner who stays one step ahead." },
+  "/about": { image: "/cta-about.png", alt: "Finance team gathered around a table", eyebrow: "Meet your finance team", title: "Good work starts with a good conversation.", detail: "Tell us where things stand. We’ll help you see the next sensible move." },
+  "/resources": { image: "/cta-resources.png", alt: "Business reports and laptop on a desk", eyebrow: "Make a better call", title: "Useful numbers. Better decisions.", detail: "Explore the practical thinking that helps founders run a more considered business." },
+  "/contact": { image: "/cta-contact.png", alt: "Founder speaking with a finance advisor", eyebrow: "Let’s talk", title: "Your numbers, made logical.", detail: "Book a free call and tell us what you’re building, fixing or planning next." },
+} as const;
+
+export function PageCta() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const content = pageCtaContent[pathname as keyof typeof pageCtaContent];
+  if (!content) return null;
+  return <section className="relative isolate min-h-[220px] overflow-hidden bg-navy text-background sm:min-h-[280px]" aria-label="Next step">
+    <img src={content.image} alt={content.alt} width={1536} height={768} loading="lazy" className="absolute inset-0 size-full object-cover opacity-55" />
+    <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/75 to-navy/35" />
+    <div className="relative mx-auto flex min-h-[220px] max-w-7xl items-center px-5 py-10 sm:min-h-[280px] sm:py-14 lg:px-8">
+      <div className="max-w-2xl"><p className="font-mono text-xs uppercase tracking-[0.12em] text-background/75">{content.eyebrow}</p><h2 className="mt-3 max-w-xl font-display text-3xl leading-tight sm:text-4xl">{content.title}</h2><p className="mt-3 max-w-lg text-sm leading-6 text-background/80">{content.detail}</p><Link to="/contact" className="mt-5 inline-flex items-center gap-2 font-semibold text-primary-foreground underline decoration-primary underline-offset-4">Start a conversation <ArrowRight className="size-4" /></Link></div>
+    </div>
+  </section>;
+}
+
 export function SiteFooter() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
