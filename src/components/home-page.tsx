@@ -44,11 +44,11 @@ function ComplianceBoard() {
 
 function HomePage() {
   return <>
-    <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy">
+    <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
       <img src={teamPhoto} alt="A chartered accountant and business owner reviewing accounts together" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 size-full object-cover object-center" />
       <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
       
-      <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-start px-5 pb-44 pt-24 lg:px-8">
+      <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-start px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
         <div className="relative z-10 max-w-2xl text-background">
           <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs"><Check className="size-3.5" /> CA-led finance team · Nagpur, Maharashtra</p>
           <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">You built a business, not a <em className="text-primary">bookkeeping</em> habit.</h1>
@@ -64,7 +64,7 @@ function HomePage() {
           <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">{["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map((item) => <p key={item} className="flex items-center gap-2 text-foreground"><span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3" /></span>{item}</p>)}</div>
         </div>
       </div>
-      <div className="mt-8 overflow-hidden border-t border-border/70 bg-background/70 py-4 sm:mt-10"><div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">{[...Array(2)].flatMap((_, pass) => ["GST", "TDS", "ROC Filings", "PF / ESI", "Payroll", "Monthly Close", "MIS Reports", "Audit Ready", "Income Tax", "Company Registration"].map((item, index) => <span key={`${pass}-${item}`} className="inline-flex items-center gap-2"><Check className="size-3 text-primary" />{item}{index < 9 && <span className="ml-6 text-border">/</span>}</span>))}</div></div>
+      <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border/70 bg-background/70 py-4"><div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">{[...Array(2)].flatMap((_, pass) => ["GST", "TDS", "ROC Filings", "PF / ESI", "Payroll", "Monthly Close", "MIS Reports", "Audit Ready", "Income Tax", "Company Registration"].map((item, index) => <span key={`${pass}-${item}`} className="inline-flex items-center gap-2"><Check className="size-3 text-primary" />{item}{index < 9 && <span className="ml-6 text-border">/</span>}</span>))}</div></div>
     </section>
 
     <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="01" label="The problem" title={<>Sound <em className="text-primary">familiar?</em></>} detail="The finance things that follow you home can be handled by someone who owns them." />

@@ -13,7 +13,7 @@ import { site, navItems } from "@/config/site";
 
 export function Wordmark({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
   return (
-    <Link to="/" className={`inline-flex items-center gap-2 font-display text-2xl font-semibold ${light ? "text-background" : "text-navy"}`} aria-label="Fiscalogic home">
+    <Link to="/" className={`inline-flex items-center gap-2 font-display text-3xl font-semibold tracking-tight ${light ? "text-background" : "text-navy"}`} aria-label="Fiscalogic home">
       <span>Fiscalogic</span>
       <svg aria-hidden="true" viewBox="0 0 22 22" className={compact ? "h-4 w-4" : "h-5 w-5"}>
         <path d="m4 11.5 4.3 4.2L18.5 5.7" fill="none" stroke="var(--color-primary)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
@@ -36,13 +36,13 @@ export function SiteHeader() {
       <header className={`${pathname === "/" ? "absolute inset-x-0 top-0 border-transparent bg-transparent text-background" : "sticky top-0 border-b border-border/80 bg-background/95"} z-40 transition-shadow ${scrolled && pathname !== "/" ? "shadow-sm" : ""}`}>
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 sm:flex sm:justify-between lg:px-8">
           <Wordmark light={pathname === "/"} />
-          <nav aria-label="Main navigation" className="hidden items-center gap-5 xl:flex">
-            {navItems.map((item) => <Link key={item.to} to={item.to} className={`tick-link text-xs font-medium ${pathname === item.to ? "text-primary" : pathname === "/" ? "text-background/90 hover:text-background" : "text-foreground/80 hover:text-primary"}`}>{item.label}</Link>)}
+          <nav aria-label="Main navigation" className="hidden items-center gap-5 lg:flex">
+            {navItems.map((item) => <Link key={item.to} to={item.to} className={`tick-link text-sm font-semibold ${pathname === item.to ? "text-primary" : pathname === "/" ? "text-background/90 hover:text-background" : "text-foreground/80 hover:text-primary"}`}>{item.label}</Link>)}
           </nav>
-          <div className="hidden items-center gap-3 sm:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <Button asChild size="sm" className="h-10 rounded-sm px-4"><Link to="/contact">Book a free call <ArrowRight /></Link></Button>
           </div>
-          <div className="flex justify-end xl:hidden">
+          <div className="flex justify-end lg:hidden">
             <Sheet>
               <SheetTrigger asChild><Button variant={pathname === "/" ? "secondary" : "outline"} size="icon" className="min-h-11 min-w-11" aria-label="Open navigation"><Menu /></Button></SheetTrigger>
               <SheetContent side="right" className="flex w-full flex-col gap-0 p-0 sm:max-w-lg">
