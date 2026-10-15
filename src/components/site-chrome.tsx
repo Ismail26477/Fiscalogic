@@ -74,8 +74,8 @@ export function PageCta() {
   const content = pageCtaContent[pathname as keyof typeof pageCtaContent];
   if (!content) return null;
   return <section className="relative isolate min-h-[220px] overflow-hidden bg-navy text-background sm:min-h-[280px]" aria-label="Next step">
-    <img src={content.image} alt={content.alt} width={1536} height={768} loading="lazy" className="absolute inset-0 size-full object-cover opacity-55" />
-    <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/75 to-navy/35" />
+    <img src={content.image} alt={content.alt} width={1536} height={768} loading="lazy" className="absolute inset-0 size-full object-cover" />
+    <div className="absolute inset-0 bg-navy/35" />
     <div className="relative mx-auto flex min-h-[220px] max-w-7xl items-center px-5 py-10 sm:min-h-[280px] sm:py-14 lg:px-8">
       <div className="max-w-2xl"><p className="font-mono text-xs uppercase tracking-[0.12em] text-background/75">{content.eyebrow}</p><h2 className="mt-3 max-w-xl font-display text-3xl leading-tight sm:text-4xl">{content.title}</h2><p className="mt-3 max-w-lg text-sm leading-6 text-background/80">{content.detail}</p><Link to="/contact" className="mt-5 inline-flex items-center gap-2 font-semibold text-primary-foreground underline decoration-primary underline-offset-4">Start a conversation <ArrowRight className="size-4" /></Link></div>
     </div>
