@@ -197,15 +197,6 @@ body {
   animation: ticker 42s linear infinite;
   }
 
-.review-track {
-  --review-step: calc((100% + 0.75rem) / 3);
-}
-
-@media (max-width: 767px) {
-  .review-track {
-    --review-step: calc(100% + 0.75rem);
-  }
-}
 
 @keyframes ticker {
   to { transform: translateX(-50%); }
