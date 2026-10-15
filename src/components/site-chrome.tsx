@@ -33,18 +33,18 @@ export function SiteHeader() {
   }, []);
   return (
     <>
-      <header className={`sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur-xl transition-shadow ${scrolled ? "shadow-sm" : ""}`}>
+      <header className={`${pathname === "/" ? "absolute inset-x-0 top-0 border-transparent bg-transparent text-background" : "sticky top-0 border-b border-border/80 bg-background/95"} z-40 transition-shadow ${scrolled && pathname !== "/" ? "shadow-sm" : ""}`}>
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 sm:flex sm:justify-between lg:px-8">
-          <Wordmark />
+          <Wordmark light={pathname === "/"} />
           <nav aria-label="Main navigation" className="hidden items-center gap-5 xl:flex">
-            {navItems.map((item) => <Link key={item.to} to={item.to} className={`tick-link text-xs font-medium ${pathname === item.to ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>{item.label}</Link>)}
+            {navItems.map((item) => <Link key={item.to} to={item.to} className={`tick-link text-xs font-medium ${pathname === item.to ? "text-primary" : pathname === "/" ? "text-background/90 hover:text-background" : "text-foreground/80 hover:text-primary"}`}>{item.label}</Link>)}
           </nav>
           <div className="hidden items-center gap-3 sm:flex">
             <Button asChild size="sm" className="h-10 rounded-sm px-4"><Link to="/contact">Book a free call <ArrowRight /></Link></Button>
           </div>
           <div className="flex justify-end xl:hidden">
             <Sheet>
-              <SheetTrigger asChild><Button variant="outline" size="icon" className="min-h-11 min-w-11" aria-label="Open navigation"><Menu /></Button></SheetTrigger>
+              <SheetTrigger asChild><Button variant={pathname === "/" ? "secondary" : "outline"} size="icon" className="min-h-11 min-w-11" aria-label="Open navigation"><Menu /></Button></SheetTrigger>
               <SheetContent side="right" className="flex w-full flex-col gap-0 p-0 sm:max-w-lg">
                 <div className="border-b border-border p-6"><SheetTitle className="text-left"><Wordmark /></SheetTitle><p className="mt-2 text-sm text-muted-foreground">Your numbers, made logical.</p></div>
                 <nav aria-label="Mobile navigation" className="flex-1 overflow-y-auto px-6 py-4">
