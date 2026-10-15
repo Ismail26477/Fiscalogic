@@ -7,7 +7,6 @@ import {
   Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { site, navItems } from "@/config/site";
 
@@ -83,16 +82,7 @@ export function PageCta() {
 }
 
 export function SiteFooter() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
   return <footer className="bg-navy text-background">
-    <div className="border-b border-background/15"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-      <div><p className="font-display text-2xl">Good reminders. Fewer surprises.</p><p className="mt-1 text-sm text-background/70">Monthly compliance notes, without the noise.</p></div>
-      <form className="flex w-full max-w-md gap-2" onSubmit={(event) => { event.preventDefault(); if (email.includes("@")) toast.message("Newsletter preview", { description: "This preview does not store your address or send emails." }); }}>
-        <label className="sr-only" htmlFor="newsletter-email">Email address</label><input id="newsletter-email" type="email" required value={email} onChange={(event) => { setEmail(event.target.value); setSubscribed(false); }} placeholder="you@company.com" className="h-11 min-w-0 flex-1 rounded-sm border border-background/30 bg-background/10 px-3 text-sm text-background placeholder:text-background/60 focus-visible:outline-background" />
-        <Button type="submit" variant="secondary" className="h-11 rounded-sm px-4">Subscribe</Button>
-      </form>
-    </div></div>
     <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.1fr_1.1fr] lg:px-8">
       <div><Wordmark light /><p className="mt-4 max-w-xs text-sm leading-6 text-background/70">Your numbers, made logical. A senior CA-led finance team for businesses ready to grow.</p><div className="mt-5 flex gap-4 text-background/75">{[["LinkedIn", "https://linkedin.com"], ["Instagram", "https://instagram.com"], ["X", "https://x.com"], ["Facebook", "https://facebook.com"]].map(([label, url]) => <a key={label} className="tick-link text-xs" href={url} target="_blank" rel="noreferrer" aria-label={label}>{label}</a>)}</div></div>
       <div><p className="font-mono text-xs text-background/50">EXPLORE</p><div className="mt-4 flex flex-col gap-3 text-sm">{navItems.map((item) => <Link key={item.to} to={item.to} className="text-background/75 hover:text-background">{item.label}</Link>)}<Link to="/privacy" className="text-background/75 hover:text-background">Privacy</Link><Link to="/terms" className="text-background/75 hover:text-background">Terms</Link></div></div>
