@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { BackToTop, PageCta, SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { BackToTop, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -127,7 +127,6 @@ function RootComponent() {
       <a className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-background focus:p-3" href="#main-content">Skip to content</a>
       <SiteHeader />
       <main id="main-content"><Outlet /></main>
-      <PageCta />
       <SiteFooter />
       <BackToTop />
       <Toaster position="top-right" />
