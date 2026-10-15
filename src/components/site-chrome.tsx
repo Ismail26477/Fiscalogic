@@ -35,9 +35,9 @@ export function SiteHeader() {
     <>
       <header className="absolute inset-x-0 top-0 z-40 border-transparent bg-transparent transition-shadow">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 sm:flex sm:justify-between lg:px-8">
-          <Wordmark light={pathname === "/"} />
+          <Wordmark light />
           <nav aria-label="Main navigation" className="hidden items-center gap-5 lg:flex">
-            {navItems.map((item) => <Link key={item.to} to={item.to} className={`tick-link text-sm font-semibold ${pathname === item.to ? "text-primary" : pathname === "/" ? "text-background/90 hover:text-background" : "text-foreground/80 hover:text-primary"}`}>{item.label}</Link>)}
+            {navItems.map((item) => <Link key={item.to} to={item.to} className={`tick-link text-sm font-semibold ${pathname === item.to ? "text-background" : "text-background/90 hover:text-background"}`}>{item.label}</Link>)}
           </nav>
           <div className="hidden items-center gap-3 lg:flex">
             <Button asChild size="sm" className="h-10 rounded-sm px-4"><Link to="/contact">Book a free call <ArrowRight /></Link></Button>
