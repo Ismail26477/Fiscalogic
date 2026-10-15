@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndustriesRouteImport } from './routes/industries'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -38,11 +37,6 @@ const ContactRoute = ContactRouteImport.update({
 const IndustriesRoute = IndustriesRouteImport.update({
   id: '/industries',
   path: '/industries',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -76,7 +70,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
-  '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
   '/services': typeof ServicesRoute
@@ -88,7 +81,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
-  '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
   '/services': typeof ServicesRoute
@@ -101,7 +93,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
-  '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRoute
   '/services': typeof ServicesRoute
@@ -115,7 +106,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/industries'
-    | '/login'
     | '/privacy'
     | '/resources'
     | '/services'
@@ -127,7 +117,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/industries'
-    | '/login'
     | '/privacy'
     | '/resources'
     | '/services'
@@ -139,7 +128,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/industries'
-    | '/login'
     | '/privacy'
     | '/resources'
     | '/services'
@@ -152,7 +140,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   IndustriesRoute: typeof IndustriesRoute
-  LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
   ResourcesRoute: typeof ResourcesRoute
   ServicesRoute: typeof ServicesRoute
@@ -188,13 +175,6 @@ declare module '@tanstack/react-router' {
       path: '/industries'
       fullPath: '/industries'
       preLoaderRoute: typeof IndustriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -240,7 +220,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   IndustriesRoute: IndustriesRoute,
-  LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,
   ResourcesRoute: ResourcesRoute,
   ServicesRoute: ServicesRoute,
