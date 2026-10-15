@@ -49,13 +49,22 @@ const heroSlides = [
 
 function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const slide = heroSlides[activeSlide];
+  const visibleTestimonials = 3;
+  const testimonialSteps = Math.max(site.testimonials.length - visibleTestimonials + 1, 1);
 
   useEffect(() => {
     const timer = window.setInterval(() => setActiveSlide((current) => (current + 1) % heroSlides.length), 6500);
     return () => window.clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveTestimonial((current) => (current + 1) % testimonialSteps);
+    }, 4200);
+    return () => window.clearInterval(timer);
+  }, [testimonialSteps]);
 
   return <>
     <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
