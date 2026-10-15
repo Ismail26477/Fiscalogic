@@ -35,6 +35,18 @@ export const site = {
       name: "Director",
       role: "Trading · Placeholder testimonial",
     },
+    { quote: "I finally know what is happening in the business before the month is over.", name: "Co-founder", role: "E-commerce · Placeholder testimonial" },
+    { quote: "Clear answers, clean reports and no last-minute filing panic.", name: "Managing partner", role: "Professional services · Placeholder testimonial" },
+    { quote: "The monthly rhythm has made our cash flow conversations much easier.", name: "Founder", role: "Healthcare · Placeholder testimonial" },
+    { quote: "They turned a backlog into a plan we could actually follow.", name: "Business owner", role: "Construction · Placeholder testimonial" },
+    { quote: "Our team spends less time chasing documents and more time serving customers.", name: "Operations lead", role: "Retail · Placeholder testimonial" },
+    { quote: "The numbers are no longer a surprise at the end of every quarter.", name: "Director", role: "Manufacturing · Placeholder testimonial" },
+    { quote: "Everything is explained without jargon, and every action has an owner.", name: "Founder", role: "SaaS · Placeholder testimonial" },
+    { quote: "Having one team for accounts and compliance has removed so much friction.", name: "Partner", role: "Consulting · Placeholder testimonial" },
+    { quote: "We can make decisions with confidence because the reports arrive when promised.", name: "CEO", role: "Logistics · Placeholder testimonial" },
+    { quote: "Fiscalogic brought structure to the parts of finance we kept putting off.", name: "Business owner", role: "Hospitality · Placeholder testimonial" },
+    { quote: "The team is proactive, practical and always clear about the next step.", name: "Managing director", role: "Distribution · Placeholder testimonial" },
+    { quote: "Our records are ready when we need them, not weeks after we ask.", name: "Founder", role: "Education · Placeholder testimonial" },
   ],
 } as const;
 
