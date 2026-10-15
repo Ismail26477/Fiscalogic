@@ -33,7 +33,7 @@ export function SiteHeader() {
   }, []);
   return (
     <>
-      <header className={`${pathname === "/" ? "absolute inset-x-0 top-0 border-transparent text-background" : "sticky top-0 border-b border-border/80"} z-40 transition-shadow ${scrolled && pathname !== "/" ? "shadow-sm" : ""}`}>
+      <header className={`${pathname === "/" ? "absolute inset-x-0 top-0 border-transparent text-background" : "sticky top-0 border-b border-border/80"} z-40 bg-transparent transition-shadow ${scrolled && pathname !== "/" ? "shadow-sm" : ""}`}>
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 sm:flex sm:justify-between lg:px-8">
           <Wordmark light={pathname === "/"} />
           <nav aria-label="Main navigation" className="hidden items-center gap-5 lg:flex">
