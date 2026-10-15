@@ -46,7 +46,7 @@ function HomePage() {
   return <>
     <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy">
       <img src={teamPhoto} alt="A chartered accountant and business owner reviewing accounts together" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 size-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/75 to-navy/25" />
+      
       <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-center px-5 pb-20 pt-24 lg:px-8">
         <div className="relative z-10 max-w-3xl text-background">
           <p className="inline-flex items-center gap-2 rounded-full border border-background/25 bg-navy/40 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 backdrop-blur sm:text-xs"><Check className="size-3.5" /> CA-led finance team · Nagpur, Maharashtra</p>
