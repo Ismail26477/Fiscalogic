@@ -4,7 +4,7 @@ import {
   ArrowRight, ArrowUp, BadgeCheck, BriefcaseBusiness, BookOpenCheck, Building2,
   ChartNoAxesCombined, Check, ChevronRight, Clock3, FileCheck2, Landmark,
   Menu, MessageCircle, ReceiptIndianRupee, ShieldCheck, Sparkles, UsersRound,
-  X, Zap,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -23,7 +23,6 @@ export function Wordmark({ light = false, compact = false }: { light?: boolean; 
 }
 
 export function SiteHeader() {
-  const [announcement, setAnnouncement] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   useEffect(() => {
@@ -34,10 +33,6 @@ export function SiteHeader() {
   }, []);
   return (
     <>
-      {announcement && <div className="relative bg-primary px-10 py-2.5 text-center text-xs font-medium text-primary-foreground sm:text-sm">
-        <Link to="/contact" className="inline-flex items-center justify-center gap-1.5">Now onboarding a limited number of new clients this quarter <ArrowRight className="size-3.5" /> Book a free consultation</Link>
-        <Button variant="ghost" size="icon" aria-label="Dismiss announcement" className="absolute right-2 top-1/2 size-8 -translate-y-1/2 text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground" onClick={() => setAnnouncement(false)}><X /></Button>
-      </div>}
       <header className={`sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur-xl transition-shadow ${scrolled ? "shadow-sm" : ""}`}>
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 sm:flex sm:justify-between lg:px-8">
           <Wordmark />
