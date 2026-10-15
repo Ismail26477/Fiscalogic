@@ -44,26 +44,23 @@ function ComplianceBoard() {
 
 function HomePage() {
   return <>
-    <section className="ledger-grid relative overflow-hidden border-b border-border/70 bg-[radial-gradient(ellipse_at_82%_25%,color-mix(in_oklch,var(--color-soft-tint)_72%,transparent),transparent_46%)]">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pb-14 pt-16 sm:pb-20 sm:pt-24 lg:grid-cols-[1.03fr_.97fr] lg:gap-16 lg:px-8 lg:pb-24 lg:pt-28">
-        <div className="relative z-10">
-          <p className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-background/90 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-primary sm:text-xs"><Check className="size-3.5" /> CA-led finance team · Nagpur, Maharashtra</p>
-          <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] text-navy sm:text-6xl lg:text-7xl">You built a business, not a <em className="text-primary">bookkeeping</em> habit.</h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
+    <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy">
+      <img src={teamPhoto} alt="A chartered accountant and business owner reviewing accounts together" width={1536} height={1024} fetchPriority="high" className="absolute inset-0 size-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/75 to-navy/25" />
+      <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-center px-5 pb-20 pt-24 lg:px-8">
+        <div className="relative z-10 max-w-3xl text-background">
+          <p className="inline-flex items-center gap-2 rounded-full border border-background/25 bg-navy/40 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 backdrop-blur sm:text-xs"><Check className="size-3.5" /> CA-led finance team · Nagpur, Maharashtra</p>
+          <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">You built a business, not a <em className="text-primary">bookkeeping</em> habit.</h1>
+          <p className="mt-6 max-w-xl text-base leading-7 text-background/85 sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"><PrimaryLink /><Button asChild variant="outline" className="h-12 rounded-sm px-5"><a href="#how-it-works">See how we work <ArrowDown /></a></Button></div>
           <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-border/80 pt-6">
             <div className="flex -space-x-2" aria-hidden="true">{["C", "F", "B"].map((letter, index) => <span key={letter} className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${index === 1 ? "bg-soft-tint text-primary" : index === 2 ? "bg-secondary text-navy" : "bg-primary text-primary-foreground"}`}>{letter}</span>)}</div>
             <div><p className="text-sm font-medium text-navy">Trusted by growing businesses across India</p><p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">★★★★★ <span className="ml-1 text-muted-foreground">Placeholder rating</span></p></div>
           </div>
         </div>
-        <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
-          <img src={teamPhoto} alt="A chartered accountant and business owner reviewing accounts together" width={1536} height={1024} fetchPriority="high" className="aspect-[1.18] w-full rounded-sm object-cover shadow-lg" />
-          <div className="absolute -bottom-7 left-4 right-4 rounded-sm border border-border bg-background/95 p-4 shadow-lg backdrop-blur sm:left-8 sm:right-8 sm:p-5">
-            <div className="flex items-center justify-between border-b border-border pb-3"><div><p className="font-display text-xl text-navy">Month-end, made orderly.</p><p className="mt-1 font-mono text-[10px] text-muted-foreground">YOUR FINANCE DESK · THIS MONTH</p></div><span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary"><ShieldCheck className="size-5" /></span></div>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">{["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map((item) => <p key={item} className="flex items-center gap-2 text-foreground"><span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3" /></span>{item}</p>)}</div>
-            <svg viewBox="0 0 420 52" aria-label="Illustrative monthly profit trend" role="img" className="mt-4 h-11 w-full text-primary"><path d="M2 42 C32 37,36 30,64 33 S105 41,128 26 157 31,184 21 218 30,245 20 278 23,304 13 350 25,375 10 399 12,418 4" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="2.5"/><path d="M2 42 C32 37,36 30,64 33 S105 41,128 26 157 31,184 21 218 30,245 20 278 23,304 13 350 25,375 10 399 12,418 4 L418 52 L2 52Z" fill="currentColor" opacity=".08"/></svg>
-            <div className="absolute -right-2 -top-5 grid size-16 rotate-6 place-items-center rounded-full border border-gold/55 bg-background text-center font-mono text-[8px] leading-3 text-gold shadow-sm sm:-right-4 sm:size-20 sm:text-[9px]">VERIFIED<br />RECONCILED<br />✓ CLOSED</div>
-          </div>
+        <div className="absolute bottom-10 left-5 right-5 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg backdrop-blur sm:left-8 sm:right-auto sm:p-5 lg:left-8">
+          <div className="flex items-center justify-between border-b border-border pb-3"><div><p className="font-display text-xl text-navy">Month-end, made orderly.</p><p className="mt-1 font-mono text-[10px] text-muted-foreground">YOUR FINANCE DESK · THIS MONTH</p></div><span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary"><ShieldCheck className="size-5" /></span></div>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">{["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map((item) => <p key={item} className="flex items-center gap-2 text-foreground"><span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3" /></span>{item}</p>)}</div>
         </div>
       </div>
       <div className="mt-8 overflow-hidden border-t border-border/70 bg-background/70 py-4 sm:mt-10"><div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">{[...Array(2)].flatMap((_, pass) => ["GST", "TDS", "ROC Filings", "PF / ESI", "Payroll", "Monthly Close", "MIS Reports", "Audit Ready", "Income Tax", "Company Registration"].map((item, index) => <span key={`${pass}-${item}`} className="inline-flex items-center gap-2"><Check className="size-3 text-primary" />{item}{index < 9 && <span className="ml-6 text-border">/</span>}</span>))}</div></div>
