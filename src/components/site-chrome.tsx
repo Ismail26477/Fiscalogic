@@ -45,7 +45,6 @@ export function SiteHeader() {
             {navItems.map((item) => <Link key={item.to} to={item.to} className={`tick-link text-xs font-medium ${pathname === item.to ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>{item.label}</Link>)}
           </nav>
           <div className="hidden items-center gap-3 sm:flex">
-            <Link to="/login" className="tick-link text-xs font-medium text-muted-foreground">Client login ↗</Link>
             <Button asChild size="sm" className="h-10 rounded-sm px-4"><Link to="/contact">Book a free call <ArrowRight /></Link></Button>
           </div>
           <div className="flex justify-end xl:hidden">
@@ -106,7 +105,10 @@ export function TickList({ items }: { items: readonly string[] }) {
   return <ul className="space-y-3">{items.map((item) => <li key={item} className="flex items-start gap-3 text-sm leading-6 text-muted-foreground"><span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3.5" /></span><span>{item}</span></li>)}</ul>;
 }
 
-export function PageHeading({ eyebrow, title, detail }: { eyebrow: string; title: React.ReactNode; detail: string }) {
+export function PageHeading({ eyebrow, title, detail, imageSrc, imageAlt }: { eyebrow: string; title: React.ReactNode; detail: string; imageSrc?: string; imageAlt?: string }) {
+  if (imageSrc) {
+    return <section className="border-b border-border bg-background"><div className="mx-auto grid max-w-7xl items-center gap-8 px-5 py-10 sm:gap-10 sm:py-14 lg:grid-cols-[1fr_.95fr] lg:gap-14 lg:px-8 lg:py-16"><div><p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">{eyebrow}</p><h1 className="mt-5 max-w-2xl font-display text-4xl leading-[1.08] text-navy sm:text-5xl lg:text-6xl">{title}</h1><p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">{detail}</p></div><img src={imageSrc} alt={imageAlt ?? ""} width={1536} height={1024} loading="lazy" className="aspect-[1.55] w-full rounded-sm object-cover" /></div></section>;
+  }
   return <div className="mx-auto max-w-7xl px-5 pb-14 pt-16 sm:pb-20 sm:pt-24 lg:px-8"><p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">{eyebrow}</p><h1 className="mt-5 max-w-4xl font-display text-5xl leading-[1.05] text-navy sm:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">{detail}</p></div>;
 }
 
