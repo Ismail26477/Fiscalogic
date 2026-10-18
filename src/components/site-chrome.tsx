@@ -10,13 +10,19 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { site, navItems } from "@/config/site";
 
+const brandLogoUrl = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-8VLACHBOGRIQPQRP3S7oEA9JwKSLhQ.png";
+
 export function Wordmark({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
   return (
-    <Link to="/" className={`inline-flex items-center gap-2 font-display text-3xl font-semibold tracking-tight ${light ? "text-background" : "text-navy"}`} aria-label="Fiscalogic home">
-      <span>Fiscalogic</span>
-      <svg aria-hidden="true" viewBox="0 0 22 22" className={compact ? "h-4 w-4" : "h-5 w-5"}>
-        <path d="m4 11.5 4.3 4.2L18.5 5.7" fill="none" stroke="var(--color-primary)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-      </svg>
+    <Link to="/" className="inline-flex items-center" aria-label="Fiscalogic home">
+      <span className="sr-only">Fiscalogic</span>
+      <img
+        src={brandLogoUrl}
+        alt="Fiscalogic — numbers make sense"
+        width={compact ? 132 : 176}
+        height={44}
+        className={`h-auto w-auto max-w-full object-contain ${compact ? "max-h-8" : "max-h-11"}`}
+      />
     </Link>
   );
 }
