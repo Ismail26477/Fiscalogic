@@ -258,18 +258,6 @@ function HomePage() {
               )}
             </div>
           </div>
-          <div className="absolute bottom-32 left-5 z-20 flex items-center gap-2 sm:left-auto sm:right-8">
-            {heroSlides.map((hero, index) => (
-              <button
-                key={hero.image}
-                type="button"
-                aria-label={`Show hero slide ${index + 1}`}
-                aria-pressed={index === activeSlide}
-                onClick={() => setActiveSlide(index)}
-                className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeSlide ? "w-10 bg-primary" : "w-5 bg-background/50 hover:bg-background"}`}
-              />
-            ))}
-          </div>
         </div>
         <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border/70 bg-background/70 py-4">
           <div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">
