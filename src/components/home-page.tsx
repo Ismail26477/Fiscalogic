@@ -699,20 +699,6 @@ function HomePage() {
             ))}
           </div>
         </div>
-        <div className="mt-5 flex justify-end">
-          <div className="flex gap-2">
-            {Array.from({ length: site.testimonials.length - 2 }, (_, index) => (
-              <button
-                key={index}
-                type="button"
-                aria-label={`Show review ${index + 1}`}
-                aria-pressed={index === activeReview}
-                onClick={() => setActiveReview(index)}
-                className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeReview ? "w-8 bg-primary" : "w-4 bg-border hover:bg-primary/50"}`}
-              />
-            ))}
-          </div>
-        </div>
       </section>
 
       <section className="bg-surface">
