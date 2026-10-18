@@ -76,10 +76,10 @@ function HomePage() {
           </div>)}
         </div>
       </div>
-      <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-start px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
-        <div className="relative z-10 max-w-2xl text-background">
+      <div className="relative mx-auto flex min-h-[680px] w-full min-w-0 max-w-7xl items-start overflow-hidden px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
+        <div className="relative z-10 min-w-0 max-w-2xl text-background">
           <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs"><Check className="size-3.5" /> {slide.eyebrow}</p>
-          <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">{slide.title}</h1>
+          <h1 className="mt-7 max-w-2xl break-words font-display text-[2.5rem] leading-[1.04] sm:text-6xl lg:text-7xl">{slide.title}</h1>
           <p className="mt-6 max-w-xl text-base leading-7 text-background/90 sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"><PrimaryLink /><Button asChild variant="outline" className="h-12 rounded-sm border-background/40 bg-background/95 px-5 text-navy hover:bg-background"><a href="#how-it-works">See how we work <ArrowDown /></a></Button></div>
           <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-background/30 pt-6">
@@ -87,7 +87,7 @@ function HomePage() {
             <div><p className="text-sm font-medium text-background">Trusted by growing businesses across India</p><p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">★★★★★ <span className="ml-1 text-background/70">Placeholder rating</span></p></div>
           </div>
         </div>
-        <div className="absolute bottom-10 left-5 right-5 z-10 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:p-5 lg:right-8">
+        <div className="absolute bottom-10 left-5 right-5 z-10 min-w-0 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:p-5 lg:right-8">
           <div className="flex items-center justify-between border-b border-border pb-3"><div><p className="font-display text-xl text-navy">Month-end, made orderly.</p><p className="mt-1 font-mono text-[10px] text-muted-foreground">YOUR FINANCE DESK · THIS MONTH</p></div><span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary"><ShieldCheck className="size-5" /></span></div>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">{["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map((item) => <p key={item} className="flex items-center gap-2 text-foreground"><span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3" /></span>{item}</p>)}</div>
         </div>
