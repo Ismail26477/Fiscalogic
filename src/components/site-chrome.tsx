@@ -10,19 +10,16 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { site, navItems } from "@/config/site";
 
-const brandLogoUrl = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-8VLACHBOGRIQPQRP3S7oEA9JwKSLhQ.png";
-
 export function Wordmark({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
   return (
-    <Link to="/" className="inline-flex items-center" aria-label="Fiscalogic home">
-      <span className="sr-only">Fiscalogic</span>
-      <img
-        src={brandLogoUrl}
-        alt="Fiscalogic — numbers make sense"
-        width={compact ? 132 : 176}
-        height={44}
-        className={`h-auto w-auto max-w-full object-contain ${compact ? "max-h-8" : "max-h-11"}`}
-      />
+    <Link to="/" className="inline-flex items-center gap-2" aria-label="Fiscalogic home">
+      <span aria-hidden="true" className={`flex shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary ${compact ? "size-7" : "size-9"}`}>
+        <ChartNoAxesCombined className={compact ? "size-5" : "size-6"} strokeWidth={2.5} />
+      </span>
+      <span className={`font-display font-semibold tracking-tight ${compact ? "text-xl" : "text-2xl"} ${light ? "text-background" : "text-navy"}`}>
+        Fiscalogic
+      </span>
+      <span className="sr-only"> — numbers make sense</span>
     </Link>
   );
 }
