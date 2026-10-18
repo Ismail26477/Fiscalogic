@@ -14,13 +14,23 @@ export function Wordmark({ light = false, compact = false }: { light?: boolean; 
   return (
     <Link to="/" className={`inline-flex items-center ${light ? "" : "font-display text-3xl font-semibold tracking-tight text-navy"}`} aria-label="Fiscalogic home">
       {light ? (
-        <img
+        <>
+          <svg aria-hidden="true" className="absolute size-0">
+            <defs>
+              <filter id="fiscalogic-remove-background" colorInterpolationFilters="sRGB">
+                <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 1 0 0 -0.08" />
+              </filter>
+            </defs>
+          </svg>
+          <img
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-owK5r8001DDKXL4Ay6jNRB6EOuR0wb.png"
           alt="Fiscalogic — Numbers make sense"
           width={310}
           height={98}
-          className="h-auto w-[220px] mix-blend-screen [background:transparent] sm:w-[280px]"
-        />
+          className="h-auto w-[220px] sm:w-[280px]"
+            style={{ filter: "url(#fiscalogic-remove-background)" }}
+          />
+        </>
       ) : (
         <>
           <span>Fiscalogic</span>
