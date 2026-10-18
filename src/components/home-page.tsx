@@ -225,7 +225,23 @@ function HomePage() {
       </div>
 
       {/* Trust indicators */}
-      
+      <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-background/30 pt-4 sm:mt-9 sm:pt-6">
+        <div className="flex -space-x-2" aria-hidden="true">
+          {["C", "F", "B"].map((letter, index) => (
+            <span
+              key={letter}
+              className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${
+                index === 1
+                  ? "bg-soft-tint text-primary"
+                  : index === 2
+                    ? "bg-secondary text-navy"
+                    : "bg-primary text-primary-foreground"
+              }`}
+            >
+              {letter}
+            </span>
+          ))}
+        </div>
 
         <div>
           <p className="text-sm font-medium text-background">
