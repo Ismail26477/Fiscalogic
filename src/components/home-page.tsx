@@ -87,7 +87,7 @@ function HomePage() {
             <div><p className="text-sm font-medium text-background">Trusted by growing businesses across India</p><p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">★★★★★ <span className="ml-1 text-background/70">Placeholder rating</span></p></div>
           </div>
         </div>
-        <div className="absolute bottom-10 left-5 right-5 z-10 min-w-0 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:p-5 lg:right-8">
+        <div className="absolute bottom-10 left-5 right-5 z-10 hidden min-w-0 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:block sm:left-auto sm:right-8 sm:p-5 lg:right-8">
           <div className="flex items-center justify-between border-b border-border pb-3"><div><p className="font-display text-xl text-navy">Month-end, made orderly.</p><p className="mt-1 font-mono text-[10px] text-muted-foreground">YOUR FINANCE DESK · THIS MONTH</p></div><span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary"><ShieldCheck className="size-5" /></span></div>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">{["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map((item) => <p key={item} className="flex items-center gap-2 text-foreground"><span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3" /></span>{item}</p>)}</div>
         </div>
