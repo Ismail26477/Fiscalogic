@@ -744,33 +744,6 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-navy text-background">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 py-16 sm:py-20 lg:px-8">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="font-mono text-xs text-background/60">12 — Start with a conversation</p>
-              <h2 className="mt-4 max-w-3xl font-display text-4xl leading-tight sm:text-5xl">
-                Your books won't <em className="text-primary-foreground">fix</em> themselves.
-              </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-background/75 sm:text-base">
-                Every month you wait adds a month of cleanup. Book a free 30-minute call and we'll
-                tell you exactly where you stand.
-              </p>
-              <p className="mt-4 font-mono text-[10px] text-background/60">
-                30 MINUTES · NO OBLIGATION · FREE BOOKS HEALTH-CHECK
-              </p>
-            </div>
-            <Button
-              asChild
-              className="h-12 shrink-0 rounded-sm bg-primary px-6 text-primary-foreground hover:bg-primary/90"
-            >
-              <Link to="/contact">
-                Book a free consultation <ArrowRight />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
     </>
   );
 }
