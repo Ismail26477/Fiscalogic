@@ -1,12 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, Check, ChevronRight, CircleCheck, Clock3, FileCheck2, ShieldCheck, Sparkles } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  ArrowDown,
+  ArrowRight,
+  Check,
+  ChevronRight,
+  CircleCheck,
+  Clock3,
+  FileCheck2,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { site, services, problems, faqs, industries } from "@/config/site";
-import { countdownTone, complianceDeadlines, formatCountdown, nextDeadlineAt } from "@/lib/compliance-deadlines";
-import { iconMap, PageHeading, PrimaryLink, SectionIntro, TickList } from "@/components/site-chrome";
+import {
+  countdownTone,
+  complianceDeadlines,
+  formatCountdown,
+  nextDeadlineAt,
+} from "@/lib/compliance-deadlines";
+import {
+  iconMap,
+  PageHeading,
+  PrimaryLink,
+  SectionIntro,
+  TickList,
+} from "@/components/site-chrome";
 
 function ComplianceBoard() {
   const [now, setNow] = useState(0);
@@ -16,113 +49,700 @@ function ComplianceBoard() {
     const timer = window.setInterval(tick, 1000);
     return () => window.clearInterval(timer);
   }, []);
-  return <div className="overflow-hidden rounded-sm border border-border bg-background shadow-sm">
-    <div className="flex flex-col gap-3 border-b border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
-      <div className="flex items-center gap-2"><span className="relative flex size-2"><span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-50" /><span className="relative inline-flex size-2 rounded-full bg-success" /></span><span className="font-mono text-xs font-medium uppercase tracking-wider text-success">Live deadlines</span></div>
-      <span className="font-mono text-xs text-muted-foreground">India · IST (UTC+5:30)</span>
+  return (
+    <div className="overflow-hidden rounded-sm border border-border bg-background shadow-sm">
+      <div className="flex flex-col gap-3 border-b border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+        <div className="flex items-center gap-2">
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-50" />
+            <span className="relative inline-flex size-2 rounded-full bg-success" />
+          </span>
+          <span className="font-mono text-xs font-medium uppercase tracking-wider text-success">
+            Live deadlines
+          </span>
+        </div>
+        <span className="font-mono text-xs text-muted-foreground">India · IST (UTC+5:30)</span>
+      </div>
+      <div className="grid divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+        {complianceDeadlines.map((deadline) => {
+          const dueAt = now ? nextDeadlineAt(deadline, now) : 0;
+          const remaining = dueAt - now;
+          const [days, hours, minutes, seconds] = formatCountdown(remaining);
+          const tone = countdownTone(remaining);
+          const toneClass =
+            tone === "danger"
+              ? "text-danger"
+              : tone === "warning"
+                ? "text-warning"
+                : "text-primary";
+          return (
+            <div key={deadline.id} className="p-5 sm:p-6">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-navy">{deadline.title}</p>
+                <FileCheck2 className="size-4 text-primary" />
+              </div>
+              <p className="mt-1 font-mono text-[10px] leading-4 text-muted-foreground">
+                {deadline.label ??
+                  `Due ${deadline.day}${deadline.day === 1 ? "st" : deadline.day === 2 ? "nd" : deadline.day === 3 ? "rd" : "th"} of the month`}
+              </p>
+              <div
+                className={`mt-5 grid grid-cols-4 gap-1 font-mono ${toneClass}`}
+                aria-label={`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds remaining`}
+              >
+                {[days, hours, minutes, seconds].map((value, index) => (
+                  <div className="text-center" key={`${deadline.id}-${index}`}>
+                    <p className="text-xl font-medium tabular-nums sm:text-2xl">{value}</p>
+                    <p className="mt-1 text-[9px] uppercase text-muted-foreground">
+                      {["days", "hrs", "min", "sec"][index]}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <p className="border-t border-border bg-surface px-5 py-3 text-xs leading-5 text-muted-foreground">
+        Dates shown are for regular monthly filers. QRMP schemes, quarterly exceptions and
+        government extensions may change your dates. On retainer, we track the ones that apply to
+        you.
+      </p>
     </div>
-    <div className="grid divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
-      {complianceDeadlines.map((deadline) => {
-        const dueAt = now ? nextDeadlineAt(deadline, now) : 0;
-        const remaining = dueAt - now;
-        const [days, hours, minutes, seconds] = formatCountdown(remaining);
-        const tone = countdownTone(remaining);
-        const toneClass = tone === "danger" ? "text-danger" : tone === "warning" ? "text-warning" : "text-primary";
-        return <div key={deadline.id} className="p-5 sm:p-6">
-          <div className="flex items-center justify-between"><p className="text-sm font-semibold text-navy">{deadline.title}</p><FileCheck2 className="size-4 text-primary" /></div>
-          <p className="mt-1 font-mono text-[10px] leading-4 text-muted-foreground">{deadline.label ?? `Due ${deadline.day}${deadline.day === 1 ? "st" : deadline.day === 2 ? "nd" : deadline.day === 3 ? "rd" : "th"} of the month`}</p>
-          <div className={`mt-5 grid grid-cols-4 gap-1 font-mono ${toneClass}`} aria-label={`${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds remaining`}>
-            {[days, hours, minutes, seconds].map((value, index) => <div className="text-center" key={`${deadline.id}-${index}`}><p className="text-xl font-medium tabular-nums sm:text-2xl">{value}</p><p className="mt-1 text-[9px] uppercase text-muted-foreground">{["days", "hrs", "min", "sec"][index]}</p></div>)}
-          </div>
-        </div>;
-      })}
-    </div>
-    <p className="border-t border-border bg-surface px-5 py-3 text-xs leading-5 text-muted-foreground">Dates shown are for regular monthly filers. QRMP schemes, quarterly exceptions and government extensions may change your dates. On retainer, we track the ones that apply to you.</p>
-  </div>;
+  );
 }
 
 const heroSlides = [
-  { image: "/hero-finance-office.png", alt: "Founder reviewing a financial report in a bright office", eyebrow: "CA-LED FINANCE TEAM · NAGPUR", title: <>You built a business, not a <em className="text-primary">bookkeeping</em> habit.</> },
-  { image: "/hero-founder-planning.png", alt: "Founders planning growth around a boardroom table", eyebrow: "CLARITY FOR GROWING TEAMS", title: <>Your next decision starts with <em className="text-primary">clean numbers.</em></> },
-  { image: "/hero-ledger-detail.png", alt: "Hands organizing financial statements on a desk", eyebrow: "YOUR FINANCE DESK · EVERY MONTH", title: <>A calmer way to keep your books <em className="text-primary">moving.</em></> },
+  {
+    image: "/hero-finance-office.png",
+    alt: "Founder reviewing a financial report in a bright office",
+    eyebrow: "CA-LED FINANCE TEAM · NAGPUR",
+    title: (
+      <>
+        You built a business, not a <em className="text-primary">bookkeeping</em> habit.
+      </>
+    ),
+  },
+  {
+    image: "/hero-founder-planning.png",
+    alt: "Founders planning growth around a boardroom table",
+    eyebrow: "CLARITY FOR GROWING TEAMS",
+    title: (
+      <>
+        Your next decision starts with <em className="text-primary">clean numbers.</em>
+      </>
+    ),
+  },
+  {
+    image: "/hero-ledger-detail.png",
+    alt: "Hands organizing financial statements on a desk",
+    eyebrow: "YOUR FINANCE DESK · EVERY MONTH",
+    title: (
+      <>
+        A calmer way to keep your books <em className="text-primary">moving.</em>
+      </>
+    ),
+  },
 ] as const;
 
 function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeReview, setActiveReview] = useState(0);
   const slide = heroSlides[activeSlide];
 
   useEffect(() => {
-    const timer = window.setInterval(() => setActiveSlide((current) => (current + 1) % heroSlides.length), 6500);
+    const timer = window.setInterval(
+      () => setActiveSlide((current) => (current + 1) % heroSlides.length),
+      6500,
+    );
     return () => window.clearInterval(timer);
   }, []);
 
-  return <>
-    <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
-      <div className="absolute inset-0 overflow-hidden" aria-live="polite">
-        <div className="flex h-full w-full transition-transform duration-700 ease-out motion-reduce:transition-none" style={{ transform: `translateX(-${activeSlide * 100}%)` }}>
-          {heroSlides.map((hero) => <div key={hero.image} className="relative h-full min-w-full">
-            <img src={hero.image} alt={hero.alt} width={1536} height={1024} fetchPriority={hero === heroSlides[0] ? "high" : "low"} className="absolute inset-0 size-full object-cover object-center" />
-            <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
-          </div>)}
-        </div>
-      </div>
-      <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-start px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
-        <div className="relative z-10 max-w-2xl text-background">
-          <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs"><Check className="size-3.5" /> {slide.eyebrow}</p>
-          <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">{slide.title}</h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-background/90 sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"><PrimaryLink /><Button asChild variant="outline" className="h-12 rounded-sm border-background/40 bg-background/95 px-5 text-navy hover:bg-background"><a href="#how-it-works">See how we work <ArrowDown /></a></Button></div>
-          <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-background/30 pt-6">
-            <div className="flex -space-x-2" aria-hidden="true">{["C", "F", "B"].map((letter, index) => <span key={letter} className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${index === 1 ? "bg-soft-tint text-primary" : index === 2 ? "bg-secondary text-navy" : "bg-primary text-primary-foreground"}`}>{letter}</span>)}</div>
-            <div><p className="text-sm font-medium text-background">Trusted by growing businesses across India</p><p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">★★★★★ <span className="ml-1 text-background/70">Placeholder rating</span></p></div>
+  useEffect(() => {
+    const timer = window.setInterval(
+      () => setActiveReview((current) => (current + 1) % (site.testimonials.length - 2)),
+      5000,
+    );
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return (
+    <>
+      <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
+        <div className="absolute inset-0 overflow-hidden" aria-live="polite">
+          <div
+            className="flex h-full w-full transition-transform duration-700 ease-out motion-reduce:transition-none"
+            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+          >
+            {heroSlides.map((hero) => (
+              <div key={hero.image} className="relative h-full min-w-full">
+                <img
+                  src={hero.image}
+                  alt={hero.alt}
+                  width={1536}
+                  height={1024}
+                  fetchPriority={hero === heroSlides[0] ? "high" : "low"}
+                  className="absolute inset-0 size-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
+              </div>
+            ))}
           </div>
         </div>
-        <div className="absolute bottom-10 left-5 right-5 z-10 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:p-5 lg:right-8">
-          <div className="flex items-center justify-between border-b border-border pb-3"><div><p className="font-display text-xl text-navy">Month-end, made orderly.</p><p className="mt-1 font-mono text-[10px] text-muted-foreground">YOUR FINANCE DESK · THIS MONTH</p></div><span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary"><ShieldCheck className="size-5" /></span></div>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">{["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map((item) => <p key={item} className="flex items-center gap-2 text-foreground"><span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3" /></span>{item}</p>)}</div>
+        <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-start px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
+          <div className="relative z-10 max-w-2xl text-background">
+            <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs">
+              <Check className="size-3.5" /> {slide.eyebrow}
+            </p>
+            <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
+              {slide.title}
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-7 text-background/90 sm:text-lg sm:leading-8">
+              Fiscalogic runs your accounts, compliance and reporting end to end, so every filing
+              lands on time and every number makes sense. One senior team. One fixed monthly fee.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <PrimaryLink />
+              <Button
+                asChild
+                variant="outline"
+                className="h-12 rounded-sm border-background/40 bg-background/95 px-5 text-navy hover:bg-background"
+              >
+                <a href="#how-it-works">
+                  See how we work <ArrowDown />
+                </a>
+              </Button>
+            </div>
+            <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-background/30 pt-6">
+              <div className="flex -space-x-2" aria-hidden="true">
+                {["C", "F", "B"].map((letter, index) => (
+                  <span
+                    key={letter}
+                    className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${index === 1 ? "bg-soft-tint text-primary" : index === 2 ? "bg-secondary text-navy" : "bg-primary text-primary-foreground"}`}
+                  >
+                    {letter}
+                  </span>
+                ))}
+              </div>
+              <div>
+                <p className="text-sm font-medium text-background">
+                  Trusted by growing businesses across India
+                </p>
+                <p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">
+                  ★★★★★ <span className="ml-1 text-background/70">Placeholder rating</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="absolute bottom-10 left-5 right-5 z-10 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:p-5 lg:right-8">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <div>
+                <p className="font-display text-xl text-navy">Month-end, made orderly.</p>
+                <p className="mt-1 font-mono text-[10px] text-muted-foreground">
+                  YOUR FINANCE DESK · THIS MONTH
+                </p>
+              </div>
+              <span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary">
+                <ShieldCheck className="size-5" />
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">
+              {["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map(
+                (item) => (
+                  <p key={item} className="flex items-center gap-2 text-foreground">
+                    <span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary">
+                      <Check className="size-3" />
+                    </span>
+                    {item}
+                  </p>
+                ),
+              )}
+            </div>
+          </div>
+          <div className="absolute bottom-32 left-5 z-20 flex items-center gap-2 sm:left-auto sm:right-8">
+            {heroSlides.map((hero, index) => (
+              <button
+                key={hero.image}
+                type="button"
+                aria-label={`Show hero slide ${index + 1}`}
+                aria-pressed={index === activeSlide}
+                onClick={() => setActiveSlide(index)}
+                className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeSlide ? "w-10 bg-primary" : "w-5 bg-background/50 hover:bg-background"}`}
+              />
+            ))}
+          </div>
         </div>
-        <div className="absolute bottom-32 left-5 z-20 flex items-center gap-2 sm:left-auto sm:right-8">
-          {heroSlides.map((hero, index) => <button key={hero.image} type="button" aria-label={`Show hero slide ${index + 1}`} aria-pressed={index === activeSlide} onClick={() => setActiveSlide(index)} className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeSlide ? "w-10 bg-primary" : "w-5 bg-background/50 hover:bg-background"}`} />)}
+        <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border/70 bg-background/70 py-4">
+          <div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">
+            {[...Array(2)].flatMap((_, pass) =>
+              [
+                "GST",
+                "TDS",
+                "ROC Filings",
+                "PF / ESI",
+                "Payroll",
+                "Monthly Close",
+                "MIS Reports",
+                "Audit Ready",
+                "Income Tax",
+                "Company Registration",
+              ].map((item, index) => (
+                <span key={`${pass}-${item}`} className="inline-flex items-center gap-2">
+                  <Check className="size-3 text-primary" />
+                  {item}
+                  {index < 9 && <span className="ml-6 text-border">/</span>}
+                </span>
+              )),
+            )}
+          </div>
         </div>
-      </div>
-      <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border/70 bg-background/70 py-4"><div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">{[...Array(2)].flatMap((_, pass) => ["GST", "TDS", "ROC Filings", "PF / ESI", "Payroll", "Monthly Close", "MIS Reports", "Audit Ready", "Income Tax", "Company Registration"].map((item, index) => <span key={`${pass}-${item}`} className="inline-flex items-center gap-2"><Check className="size-3 text-primary" />{item}{index < 9 && <span className="ml-6 text-border">/</span>}</span>))}</div></div>
-    </section>
+      </section>
 
-    <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="01" label="The problem" title={<>Sound <em className="text-primary">familiar?</em></>} detail="The finance things that follow you home can be handled by someone who owns them." />
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{problems.map((problem, index) => <Dialog key={problem.title}><DialogTrigger asChild><button className="soft-rise group flex min-h-48 w-full flex-col justify-between rounded-sm border border-border bg-background p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="flex items-center justify-between"><span className="font-mono text-xs text-muted-foreground">/{String(index + 1).padStart(2, "0")}</span><ChevronRight className="size-4 text-primary transition-transform group-hover:translate-x-1" /></span><span className="mt-7 font-display text-2xl leading-snug text-navy">{problem.title}</span><span className="mt-2 text-xs text-muted-foreground">A clearer way through <span className="text-primary">↗</span></span></button></DialogTrigger><DialogContent><DialogHeader><DialogTitle className="font-display text-3xl text-navy">{problem.title}</DialogTitle><DialogDescription className="pt-2 text-base leading-7">We take the pressure off by giving this work a clear owner.</DialogDescription></DialogHeader><div className="rounded-sm bg-soft-tint p-4"><p className="font-mono text-xs uppercase text-primary">How Fiscalogic fixes it</p><p className="mt-2 text-sm leading-6 text-foreground">{problem.fix}</p></div><PrimaryLink /></DialogContent></Dialog>)}</div>
-    </section>
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
+        <SectionIntro
+          index="01"
+          label="The problem"
+          title={
+            <>
+              Sound <em className="text-primary">familiar?</em>
+            </>
+          }
+          detail="The finance things that follow you home can be handled by someone who owns them."
+        />
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {problems.map((problem, index) => (
+            <Dialog key={problem.title}>
+              <DialogTrigger asChild>
+                <button className="soft-rise group flex min-h-48 w-full flex-col justify-between rounded-sm border border-border bg-background p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <span className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-muted-foreground">
+                      /{String(index + 1).padStart(2, "0")}
+                    </span>
+                    <ChevronRight className="size-4 text-primary transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <span className="mt-7 font-display text-2xl leading-snug text-navy">
+                    {problem.title}
+                  </span>
+                  <span className="mt-2 text-xs text-muted-foreground">
+                    A clearer way through <span className="text-primary">↗</span>
+                  </span>
+                </button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle className="font-display text-3xl text-navy">
+                    {problem.title}
+                  </DialogTitle>
+                  <DialogDescription className="pt-2 text-base leading-7">
+                    We take the pressure off by giving this work a clear owner.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="rounded-sm bg-soft-tint p-4">
+                  <p className="font-mono text-xs uppercase text-primary">
+                    How Fiscalogic fixes it
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-foreground">{problem.fix}</p>
+                </div>
+                <PrimaryLink />
+              </DialogContent>
+            </Dialog>
+          ))}
+        </div>
+      </section>
 
-    <section className="bg-surface"><div className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="02" label="What we do" title={<>We don't just advise. We <em className="text-primary">take over.</em></>} detail="A complete finance desk, scaled to your business. One senior team and one fixed monthly fee." />
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{services.map((service, index) => { const Icon = iconMap[service.icon]; return <Link to="/services" hash={service.id} key={service.id} className={`soft-rise group flex min-h-52 flex-col rounded-sm border border-border bg-background p-5 ${index === 0 ? "lg:col-span-2 lg:row-span-1" : ""}`}><span className="flex items-start justify-between"><Icon className="size-5 text-primary" /><span className="font-mono text-[10px] text-muted-foreground">{String(index + 1).padStart(2, "0")}</span></span><span className="mt-7 font-display text-xl text-navy">{service.title}</span><span className="mt-2 text-sm leading-6 text-muted-foreground">{service.short}</span><span className="mt-auto flex items-center gap-1 pt-5 text-xs font-semibold text-primary">Explore service <ChevronRight className="size-3.5 transition-transform group-hover:translate-x-1" /></span></Link>; })}</div>
-    </div></section>
+      <section className="bg-surface">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
+          <SectionIntro
+            index="02"
+            label="What we do"
+            title={
+              <>
+                We don't just advise. We <em className="text-primary">take over.</em>
+              </>
+            }
+            detail="A complete finance desk, scaled to your business. One senior team and one fixed monthly fee."
+          />
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((service, index) => {
+              const Icon = iconMap[service.icon];
+              return (
+                <Link
+                  to="/services"
+                  hash={service.id}
+                  key={service.id}
+                  className={`soft-rise group flex min-h-52 flex-col rounded-sm border border-border bg-background p-5 ${index === 0 ? "lg:col-span-2 lg:row-span-1" : ""}`}
+                >
+                  <span className="flex items-start justify-between">
+                    <Icon className="size-5 text-primary" />
+                    <span className="font-mono text-[10px] text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </span>
+                  <span className="mt-7 font-display text-xl text-navy">{service.title}</span>
+                  <span className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {service.short}
+                  </span>
+                  <span className="mt-auto flex items-center gap-1 pt-5 text-xs font-semibold text-primary">
+                    Explore service{" "}
+                    <ChevronRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-    <section id="how-it-works" className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="03" label="How it works" title={<>From chaos to <em className="text-primary">closed</em> in four steps.</>} detail="No complicated handover. No mystery quote. Just a sensible start." />
-      <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">{[["01", "Free discovery call", "30 minutes to understand your business, current setup and what keeps slipping."], ["02", "Books health-check", "We review the current picture, spot gaps and agree what needs attention first."], ["03", "Fixed quote in writing", "A clear monthly scope and fee before we take anything on."], ["04", "We take over", "Monthly reports, tracked filings and a finance team you can reach."]].map(([number, title, text], index) => <div key={number} className="relative border-l border-primary/25 pl-5"><p className="font-mono text-xs text-primary">STEP {number}</p><h3 className="mt-3 font-display text-2xl text-navy">{title}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>{index < 3 && <ChevronRight aria-hidden="true" className="absolute -right-1 top-0 hidden size-4 text-primary lg:block" />}</div>)}</div>
-    </section>
+      <section id="how-it-works" className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
+        <SectionIntro
+          index="03"
+          label="How it works"
+          title={
+            <>
+              From chaos to <em className="text-primary">closed</em> in four steps.
+            </>
+          }
+          detail="No complicated handover. No mystery quote. Just a sensible start."
+        />
+        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            [
+              "01",
+              "Free discovery call",
+              "30 minutes to understand your business, current setup and what keeps slipping.",
+            ],
+            [
+              "02",
+              "Books health-check",
+              "We review the current picture, spot gaps and agree what needs attention first.",
+            ],
+            [
+              "03",
+              "Fixed quote in writing",
+              "A clear monthly scope and fee before we take anything on.",
+            ],
+            [
+              "04",
+              "We take over",
+              "Monthly reports, tracked filings and a finance team you can reach.",
+            ],
+          ].map(([number, title, text], index) => (
+            <div key={number} className="relative border-l border-primary/25 pl-5">
+              <p className="font-mono text-xs text-primary">STEP {number}</p>
+              <h3 className="mt-3 font-display text-2xl text-navy">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
+              {index < 3 && (
+                <ChevronRight
+                  aria-hidden="true"
+                  className="absolute -right-1 top-0 hidden size-4 text-primary lg:block"
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
 
-    <section className="border-y border-border bg-surface"><div className="mx-auto grid max-w-7xl gap-9 px-5 py-14 sm:py-16 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8"><div><p className="font-mono text-xs text-primary">04 — The tools</p><h2 className="mt-3 font-display text-3xl text-navy">Whatever software your books live in.</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">No rip-and-replace. We work inside your existing setup.</p></div><div className="flex flex-wrap gap-2">{["Tally Prime", "Zoho Books", "QuickBooks", "Busy", "Marg", "SAP", "Excel", "Google Sheets"].map((tool) => <span key={tool} className="rounded-sm border border-border bg-background px-4 py-3 text-sm font-medium text-foreground">{tool}</span>)}</div></div></section>
+      <section className="border-y border-border bg-surface">
+        <div className="mx-auto grid max-w-7xl gap-9 px-5 py-14 sm:py-16 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8">
+          <div>
+            <p className="font-mono text-xs text-primary">04 — The tools</p>
+            <h2 className="mt-3 font-display text-3xl text-navy">
+              Whatever software your books live in.
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">
+              No rip-and-replace. We work inside your existing setup.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {[
+              "Tally Prime",
+              "Zoho Books",
+              "QuickBooks",
+              "Busy",
+              "Marg",
+              "SAP",
+              "Excel",
+              "Google Sheets",
+            ].map((tool) => (
+              <span
+                key={tool}
+                className="rounded-sm border border-border bg-background px-4 py-3 text-sm font-medium text-foreground"
+              >
+                {tool}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
 
-    <section className="bg-soft-tint"><div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 sm:py-28 lg:grid-cols-2 lg:px-8"><div><p className="font-mono text-xs text-primary">05 — The tick</p><h2 className="mt-4 font-display text-4xl leading-tight text-navy sm:text-5xl">In accounting, a tick means one thing: <em className="text-primary">checked.</em></h2><p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">Every entry we touch is verified, reconciled and ticked off. That tick is our logo—and our standard.</p><div className="mt-8 flex items-center gap-3"><span className="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground"><Check className="size-6" /></span><p className="text-sm font-medium text-navy">Not just entered. Understood and checked.</p></div></div>
-      <div className="relative rounded-sm border border-border bg-background p-6 shadow-sm sm:p-8"><p className="font-mono text-xs text-muted-foreground">MONTHLY LEDGER · INR</p><div className="mt-7 space-y-4 font-mono text-xs sm:text-sm">{[["REVENUE", "4,80,000"], ["EXPENSES", "(3,10,000)"], ["NET PROFIT", "1,70,000"]].map(([label, amount], i) => <div key={label} className={`grid grid-cols-[1fr_auto_auto] items-center gap-3 border-b border-dashed border-border pb-3 ${i === 2 ? "font-medium text-navy" : "text-muted-foreground"}`}><span>{label}</span><span>{amount}</span><Check className="size-4 text-primary" /></div>)}</div><div className="mt-6 inline-flex -rotate-2 items-center gap-2 border border-gold/60 px-3 py-2 font-mono text-[9px] uppercase tracking-widest text-gold">VERIFIED · RECONCILED · CLOSED <Check className="size-3" /></div></div>
-    </div></section>
+      <section className="bg-soft-tint">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 sm:py-28 lg:grid-cols-2 lg:px-8">
+          <div>
+            <p className="font-mono text-xs text-primary">05 — The tick</p>
+            <h2 className="mt-4 font-display text-4xl leading-tight text-navy sm:text-5xl">
+              In accounting, a tick means one thing: <em className="text-primary">checked.</em>
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">
+              Every entry we touch is verified, reconciled and ticked off. That tick is our logo—and
+              our standard.
+            </p>
+            <div className="mt-8 flex items-center gap-3">
+              <span className="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground">
+                <Check className="size-6" />
+              </span>
+              <p className="text-sm font-medium text-navy">
+                Not just entered. Understood and checked.
+              </p>
+            </div>
+          </div>
+          <div className="relative rounded-sm border border-border bg-background p-6 shadow-sm sm:p-8">
+            <p className="font-mono text-xs text-muted-foreground">MONTHLY LEDGER · INR</p>
+            <div className="mt-7 space-y-4 font-mono text-xs sm:text-sm">
+              {[
+                ["REVENUE", "4,80,000"],
+                ["EXPENSES", "(3,10,000)"],
+                ["NET PROFIT", "1,70,000"],
+              ].map(([label, amount], i) => (
+                <div
+                  key={label}
+                  className={`grid grid-cols-[1fr_auto_auto] items-center gap-3 border-b border-dashed border-border pb-3 ${i === 2 ? "font-medium text-navy" : "text-muted-foreground"}`}
+                >
+                  <span>{label}</span>
+                  <span>{amount}</span>
+                  <Check className="size-4 text-primary" />
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 inline-flex -rotate-2 items-center gap-2 border border-gold/60 px-3 py-2 font-mono text-[9px] uppercase tracking-widest text-gold">
+              VERIFIED · RECONCILED · CLOSED <Check className="size-3" />
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="06" label="Why Fiscalogic" title={<>A senior finance team. <em className="text-primary">In your corner.</em></>} detail="A few useful measures, followed by the habits behind them." />
-      <div className="grid grid-cols-2 gap-px overflow-hidden border border-border bg-border lg:grid-cols-4">{site.stats.map((stat) => <div key={stat.label} className="bg-background p-5 sm:p-7"><p className="font-display text-4xl text-primary sm:text-5xl">{stat.value}</p><p className="mt-3 text-sm text-muted-foreground">{stat.label}</p><p className="mt-2 font-mono text-[9px] text-gold">INDICATIVE · PLEASE CONFIRM</p></div>)}</div>
-      <div className="mt-5 grid gap-3 md:grid-cols-3">{[["Senior CA-led team", "A senior team owns the work. Your books are not a training exercise."], ["Fixed monthly fee", "No hourly billing and no surprise invoices. Scope and fee in writing."], ["Proactive, not reactive", "We flag issues early, while there is still time to do something about them."]].map(([title, text]) => <div key={title} className="rounded-sm border border-border p-5"><CircleCheck className="size-5 text-primary" /><h3 className="mt-4 font-display text-xl text-navy">{title}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p></div>)}</div>
-    </section>
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
+        <SectionIntro
+          index="06"
+          label="Why Fiscalogic"
+          title={
+            <>
+              A senior finance team. <em className="text-primary">In your corner.</em>
+            </>
+          }
+          detail="A few useful measures, followed by the habits behind them."
+        />
+        <div className="grid grid-cols-2 gap-px overflow-hidden border border-border bg-border lg:grid-cols-4">
+          {site.stats.map((stat) => (
+            <div key={stat.label} className="bg-background p-5 sm:p-7">
+              <p className="font-display text-4xl text-primary sm:text-5xl">{stat.value}</p>
+              <p className="mt-3 text-sm text-muted-foreground">{stat.label}</p>
+              <p className="mt-2 font-mono text-[9px] text-gold">INDICATIVE · PLEASE CONFIRM</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          {[
+            [
+              "Senior CA-led team",
+              "A senior team owns the work. Your books are not a training exercise.",
+            ],
+            [
+              "Fixed monthly fee",
+              "No hourly billing and no surprise invoices. Scope and fee in writing.",
+            ],
+            [
+              "Proactive, not reactive",
+              "We flag issues early, while there is still time to do something about them.",
+            ],
+          ].map(([title, text]) => (
+            <div key={title} className="rounded-sm border border-border p-5">
+              <CircleCheck className="size-5 text-primary" />
+              <h3 className="mt-4 font-display text-xl text-navy">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    <section className="bg-surface"><div className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="07" label="The compliance board" title={<>Every deadline, tracked <em className="text-primary">to the second.</em></>} detail="You can see the next due date coming. We make sure the right person is already on it." /><ComplianceBoard /></div></section>
+      <section className="bg-surface">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
+          <SectionIntro
+            index="07"
+            label="The compliance board"
+            title={
+              <>
+                Every deadline, tracked <em className="text-primary">to the second.</em>
+              </>
+            }
+            detail="You can see the next due date coming. We make sure the right person is already on it."
+          />
+          <ComplianceBoard />
+        </div>
+      </section>
 
-    <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="08" label="Industries" title={<>Built around how your business <em className="text-primary">actually runs.</em></>} detail="Different businesses have different money questions. We get into the details that move yours." /><div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">{industries.map((industry) => <div key={industry.title} className="flex min-h-24 items-center gap-3 border-b border-border py-4"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-4" /></span><div><p className="font-medium text-navy">{industry.title}</p><p className="mt-1 text-xs leading-5 text-muted-foreground">{industry.detail}</p></div></div>)}</div><Link to="/industries" className="tick-link mt-7 inline-flex items-center gap-2 text-sm font-medium text-primary">See industries we serve <ArrowRight className="size-4" /></Link></section>
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
+        <SectionIntro
+          index="08"
+          label="Industries"
+          title={
+            <>
+              Built around how your business <em className="text-primary">actually runs.</em>
+            </>
+          }
+          detail="Different businesses have different money questions. We get into the details that move yours."
+        />
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {industries.map((industry) => (
+            <div
+              key={industry.title}
+              className="flex min-h-24 items-center gap-3 border-b border-border py-4"
+            >
+              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-soft-tint text-primary">
+                <Check className="size-4" />
+              </span>
+              <div>
+                <p className="font-medium text-navy">{industry.title}</p>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">{industry.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <Link
+          to="/industries"
+          className="tick-link mt-7 inline-flex items-center gap-2 text-sm font-medium text-primary"
+        >
+          See industries we serve <ArrowRight className="size-4" />
+        </Link>
+      </section>
 
-    <section className="bg-soft-tint"><div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:py-28 lg:grid-cols-[.9fr_1.1fr] lg:px-8"><div><p className="font-mono text-xs text-primary">09 — One retainer</p><h2 className="mt-4 font-display text-4xl leading-tight text-navy sm:text-5xl">One number a month. <em className="text-primary">Everything</em> handled.</h2><p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">No hourly billing. No surprise invoices. After a free call, we review your books and send one fixed monthly quote in writing.</p><p className="mt-8 border-l-2 border-gold pl-4 font-display text-2xl text-navy">If it touches your numbers, it's in scope.</p><div className="mt-8"><PrimaryLink /></div></div><div className="rounded-sm border border-border bg-background p-6 sm:p-8"><p className="font-mono text-xs text-primary">INSIDE EVERY RETAINER</p><h3 className="mt-3 font-display text-2xl text-navy">Finance that stays handled.</h3><div className="mt-6"><TickList items={["Full accounting operations, scoped to your business", "Every filing tracked, prepared, submitted and confirmed", "Monthly close and MIS in plain English", "Compliance watch: notices, deadlines and rule changes", "A senior team on call, with an indicative 24-hour response target"]} /></div><div className="mt-7 grid gap-2 border-t border-border pt-5 sm:grid-cols-3">{[["Starter", "Early-stage · low volume"], ["Growth", "Most popular · growing teams"], ["Enterprise", "Multi-entity · high volume"]].map(([name, text], index) => <div key={name} className={`rounded-sm border p-3 ${index === 1 ? "border-primary bg-soft-tint" : "border-border"}`}><p className="font-display text-lg text-navy">{name}</p><p className="mt-1 min-h-9 text-[10px] leading-4 text-muted-foreground">{text}</p><p className="mt-2 font-mono text-[10px] text-primary">Custom quote</p></div>)}</div></div></div></section>
+      <section className="bg-soft-tint">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:py-28 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
+          <div>
+            <p className="font-mono text-xs text-primary">09 — One retainer</p>
+            <h2 className="mt-4 font-display text-4xl leading-tight text-navy sm:text-5xl">
+              One number a month. <em className="text-primary">Everything</em> handled.
+            </h2>
+            <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
+              No hourly billing. No surprise invoices. After a free call, we review your books and
+              send one fixed monthly quote in writing.
+            </p>
+            <p className="mt-8 border-l-2 border-gold pl-4 font-display text-2xl text-navy">
+              If it touches your numbers, it's in scope.
+            </p>
+            <div className="mt-8">
+              <PrimaryLink />
+            </div>
+          </div>
+          <div className="rounded-sm border border-border bg-background p-6 sm:p-8">
+            <p className="font-mono text-xs text-primary">INSIDE EVERY RETAINER</p>
+            <h3 className="mt-3 font-display text-2xl text-navy">Finance that stays handled.</h3>
+            <div className="mt-6">
+              <TickList
+                items={[
+                  "Full accounting operations, scoped to your business",
+                  "Every filing tracked, prepared, submitted and confirmed",
+                  "Monthly close and MIS in plain English",
+                  "Compliance watch: notices, deadlines and rule changes",
+                  "A senior team on call, with an indicative 24-hour response target",
+                ]}
+              />
+            </div>
+            <div className="mt-7 grid gap-2 border-t border-border pt-5 sm:grid-cols-3">
+              {[
+                ["Starter", "Early-stage · low volume"],
+                ["Growth", "Most popular · growing teams"],
+                ["Enterprise", "Multi-entity · high volume"],
+              ].map(([name, text], index) => (
+                <div
+                  key={name}
+                  className={`rounded-sm border p-3 ${index === 1 ? "border-primary bg-soft-tint" : "border-border"}`}
+                >
+                  <p className="font-display text-lg text-navy">{name}</p>
+                  <p className="mt-1 min-h-9 text-[10px] leading-4 text-muted-foreground">{text}</p>
+                  <p className="mt-2 font-mono text-[10px] text-primary">Custom quote</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="10" label="A note from clients" title={<>A calmer way to run the <em className="text-primary">back office.</em></>} detail="Illustrative testimonials for layout only. Replace these with approved client quotes before publishing." /><div className="grid gap-3 md:grid-cols-3">{site.testimonials.map((testimonial) => <blockquote key={testimonial.name + testimonial.role} className="flex min-h-64 flex-col rounded-sm border border-border bg-background p-6"><p className="font-mono text-xs text-gold">★★★★★</p><p className="mt-5 flex-1 font-display text-xl leading-7 text-navy">“{testimonial.quote}”</p><footer className="mt-6 border-t border-border pt-4"><p className="text-sm font-semibold text-navy">{testimonial.name}</p><p className="mt-1 text-xs text-muted-foreground">{testimonial.role}</p></footer></blockquote>)}</div></section>
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
+        <SectionIntro
+          index="10"
+          label="A note from clients"
+          title={
+            <>
+              A calmer way to run the <em className="text-primary">back office.</em>
+            </>
+          }
+          detail="Illustrative testimonials for layout only. Replace these with approved client quotes before publishing."
+        />
+        <div className="review-carousel mt-8 overflow-hidden" aria-live="polite">
+          <div
+            className="review-track flex gap-3"
+            style={{ "--review-index": activeReview } as CSSProperties}
+          >
+            {site.testimonials.map((testimonial) => (
+              <blockquote
+                key={testimonial.name + testimonial.role}
+                className="flex min-h-64 shrink-0 flex-col rounded-sm border border-border bg-background p-6"
+              >
+                <p className="font-mono text-xs text-gold">★★★★★</p>
+                <p className="mt-5 flex-1 font-display text-xl leading-7 text-navy">
+                  “{testimonial.quote}”
+                </p>
+                <footer className="mt-6 border-t border-border pt-4">
+                  <p className="text-sm font-semibold text-navy">{testimonial.name}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{testimonial.role}</p>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+        <div className="mt-5 flex justify-end">
+          <div className="flex gap-2">
+            {Array.from({ length: site.testimonials.length - 2 }, (_, index) => (
+              <button
+                key={index}
+                type="button"
+                aria-label={`Show review ${index + 1}`}
+                aria-pressed={index === activeReview}
+                onClick={() => setActiveReview(index)}
+                className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeReview ? "w-8 bg-primary" : "w-4 bg-border hover:bg-primary/50"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
 
-    <section className="bg-surface"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:py-28 lg:grid-cols-[.7fr_1.3fr] lg:px-8"><div><p className="font-mono text-xs text-primary">11 — Good questions</p><h2 className="mt-4 font-display text-4xl text-navy">Before we <em className="text-primary">begin.</em></h2><p className="mt-4 text-sm leading-6 text-muted-foreground">Plain answers to the things founders usually want to know first.</p></div><Accordion type="single" collapsible className="w-full">{faqs.map((faq, index) => <AccordionItem value={`item-${index}`} key={faq.question} className="border-border"><AccordionTrigger className="py-5 text-left text-base text-navy hover:no-underline">{faq.question}</AccordionTrigger><AccordionContent className="max-w-2xl text-sm leading-6 text-muted-foreground">{faq.answer}</AccordionContent></AccordionItem>)}</Accordion></div></section>
+      <section className="bg-surface">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:py-28 lg:grid-cols-[.7fr_1.3fr] lg:px-8">
+          <div>
+            <p className="font-mono text-xs text-primary">11 — Good questions</p>
+            <h2 className="mt-4 font-display text-4xl text-navy">
+              Before we <em className="text-primary">begin.</em>
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              Plain answers to the things founders usually want to know first.
+            </p>
+          </div>
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, index) => (
+              <AccordionItem value={`item-${index}`} key={faq.question} className="border-border">
+                <AccordionTrigger className="py-5 text-left text-base text-navy hover:no-underline">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="max-w-2xl text-sm leading-6 text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
 
-    <section className="bg-navy text-background"><div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 py-16 sm:py-20 lg:px-8"><div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between"><div><p className="font-mono text-xs text-background/60">12 — Start with a conversation</p><h2 className="mt-4 max-w-3xl font-display text-4xl leading-tight sm:text-5xl">Your books won't <em className="text-primary-foreground">fix</em> themselves.</h2><p className="mt-4 max-w-2xl text-sm leading-7 text-background/75 sm:text-base">Every month you wait adds a month of cleanup. Book a free 30-minute call and we'll tell you exactly where you stand.</p><p className="mt-4 font-mono text-[10px] text-background/60">30 MINUTES · NO OBLIGATION · FREE BOOKS HEALTH-CHECK</p></div><Button asChild className="h-12 shrink-0 rounded-sm bg-primary px-6 text-primary-foreground hover:bg-primary/90"><Link to="/contact">Book a free consultation <ArrowRight /></Link></Button></div></div></section>
-  </>;
+    </>
+  );
 }
 
 export { ComplianceBoard, HomePage };
