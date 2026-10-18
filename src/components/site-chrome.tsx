@@ -14,13 +14,20 @@ export function Wordmark({ light = false, compact = false }: { light?: boolean; 
   return (
     <Link to="/" className={`inline-flex items-center ${light ? "" : "font-display text-3xl font-semibold tracking-tight text-navy"}`} aria-label="Fiscalogic home">
       {light ? (
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-UtdxtwpD57GRjAtRT2uUhStfB9znAJ.png"
-          alt="Fiscalogic — Numbers make sense"
-          width={276}
-          height={67}
-          className="h-12 w-auto object-contain sm:h-14"
-        />
+        <span className="inline-flex flex-col leading-none text-white" aria-label="Fiscalogic — Numbers make sense">
+          <span className="flex items-center font-sans text-[1.55rem] font-semibold tracking-[0.08em] sm:text-[1.8rem]">
+            FISCAL
+            <span className="relative mx-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#39d353] sm:h-9 sm:w-9" aria-hidden="true">
+              <span className="absolute bottom-1 left-1.5 h-2 w-1.5 bg-[#39d353] sm:h-2.5" />
+              <span className="absolute bottom-1 left-3.5 h-4 w-1.5 bg-[#39d353] sm:h-5" />
+              <span className="absolute bottom-1 right-1.5 h-5 w-1.5 bg-[#39d353] sm:h-7" />
+              <span className="absolute left-1 top-2 h-1.5 w-7 -rotate-45 origin-left border-t-2 border-[#39d353] sm:w-8" />
+              <span className="absolute right-0.5 top-0 border-b-[5px] border-l-[5px] border-b-[#39d353] border-l-transparent" />
+            </span>
+            GIC
+          </span>
+          <span className="mt-1 text-center text-[0.42rem] font-medium tracking-[0.4em] text-white/90 sm:text-[0.5rem]">NUMBERS MAKE SENSE</span>
+        </span>
       ) : (
         <>
           <span>Fiscalogic</span>
