@@ -12,11 +12,23 @@ import { site, navItems } from "@/config/site";
 
 export function Wordmark({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
   return (
-    <Link to="/" className={`inline-flex items-center gap-2 font-display text-3xl font-semibold tracking-tight ${light ? "text-background" : "text-navy"}`} aria-label="Fiscalogic home">
-      <span>Fiscalogic</span>
-      <svg aria-hidden="true" viewBox="0 0 22 22" className={compact ? "h-4 w-4" : "h-5 w-5"}>
-        <path d="m4 11.5 4.3 4.2L18.5 5.7" fill="none" stroke="var(--color-primary)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-      </svg>
+    <Link to="/" className={`inline-flex items-center ${light ? "" : "font-display text-3xl font-semibold tracking-tight text-navy"}`} aria-label="Fiscalogic home">
+      {light ? (
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-LLPlorNgLXj1fguYI94vkGUb9o38Z7.png"
+          alt="Fiscalogic — Numbers make sense"
+          width={220}
+          height={54}
+          className={compact ? "h-8 w-auto" : "h-11 w-auto"}
+        />
+      ) : (
+        <>
+          <span>Fiscalogic</span>
+          <svg aria-hidden="true" viewBox="0 0 22 22" className={compact ? "h-4 w-4" : "h-5 w-5"}>
+            <path d="m4 11.5 4.3 4.2L18.5 5.7" fill="none" stroke="var(--color-primary)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+          </svg>
+        </>
+      )}
     </Link>
   );
 }
