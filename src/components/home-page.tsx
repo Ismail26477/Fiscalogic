@@ -67,7 +67,7 @@ function HomePage() {
   }, [testimonialSteps]);
 
   return <>
-    <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
+    <section className="relative isolate h-[90svh] min-h-0 overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
       <div className="absolute inset-0 overflow-hidden" aria-live="polite">
         <div className="flex h-full w-full transition-transform duration-700 ease-out motion-reduce:transition-none" style={{ transform: `translateX(-${activeSlide * 100}%)` }}>
           {heroSlides.map((hero) => <div key={hero.image} className="relative h-full min-w-full">
@@ -76,13 +76,13 @@ function HomePage() {
           </div>)}
         </div>
       </div>
-      <div className="relative mx-auto flex min-h-[680px] w-full min-w-0 max-w-7xl items-start overflow-hidden px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
+      <div className="relative mx-auto flex h-full w-full min-w-0 max-w-7xl items-start overflow-hidden px-5 pb-20 pt-20 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
         <div className="relative z-10 min-w-0 max-w-2xl text-background">
           <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs"><Check className="size-3.5" /> {slide.eyebrow}</p>
           <h1 className="mt-7 max-w-2xl break-words font-display text-[2.5rem] leading-[1.04] sm:text-6xl lg:text-7xl">{slide.title}</h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-background/90 sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"><PrimaryLink /><Button asChild variant="outline" className="h-12 rounded-sm border-background/40 bg-background/95 px-5 text-navy hover:bg-background"><a href="#how-it-works">See how we work <ArrowDown /></a></Button></div>
-          <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-background/30 pt-6">
+          <p className="mt-6 hidden max-w-xl text-base leading-7 text-background/90 sm:block sm:text-lg sm:leading-8">Fiscalogic runs your accounts, compliance and reporting end to end, so every filing lands on time and every number makes sense. One senior team. One fixed monthly fee.</p>
+          <div className="mt-8 hidden flex-col gap-3 sm:flex sm:flex-row sm:items-center"><PrimaryLink /><Button asChild variant="outline" className="h-12 rounded-sm border-background/40 bg-background/95 px-5 text-navy hover:bg-background"><a href="#how-it-works">See how we work <ArrowDown /></a></Button></div>
+          <div className="mt-9 hidden flex-wrap items-center gap-3 border-t border-background/30 pt-6 sm:flex">
             <div className="flex -space-x-2" aria-hidden="true">{["C", "F", "B"].map((letter, index) => <span key={letter} className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${index === 1 ? "bg-soft-tint text-primary" : index === 2 ? "bg-secondary text-navy" : "bg-primary text-primary-foreground"}`}>{letter}</span>)}</div>
             <div><p className="text-sm font-medium text-background">Trusted by growing businesses across India</p><p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">★★★★★ <span className="ml-1 text-background/70">Placeholder rating</span></p></div>
           </div>
@@ -95,7 +95,7 @@ function HomePage() {
           {heroSlides.map((hero, index) => <button key={hero.image} type="button" aria-label={`Show hero slide ${index + 1}`} aria-pressed={index === activeSlide} onClick={() => setActiveSlide(index)} className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeSlide ? "w-10 bg-primary" : "w-5 bg-background/50 hover:bg-background"}`} />)}
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border/70 bg-background/70 py-4"><div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">{[...Array(2)].flatMap((_, pass) => ["GST", "TDS", "ROC Filings", "PF / ESI", "Payroll", "Monthly Close", "MIS Reports", "Audit Ready", "Income Tax", "Company Registration"].map((item, index) => <span key={`${pass}-${item}`} className="inline-flex items-center gap-2"><Check className="size-3 text-primary" />{item}{index < 9 && <span className="ml-6 text-border">/</span>}</span>))}</div></div>
+      <div className="absolute inset-x-0 bottom-0 hidden overflow-hidden border-t border-border/70 bg-background/70 py-4 sm:block"><div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">{[...Array(2)].flatMap((_, pass) => ["GST", "TDS", "ROC Filings", "PF / ESI", "Payroll", "Monthly Close", "MIS Reports", "Audit Ready", "Income Tax", "Company Registration"].map((item, index) => <span key={`${pass}-${item}`} className="inline-flex items-center gap-2"><Check className="size-3 text-primary" />{item}{index < 9 && <span className="ml-6 text-border">/</span>}</span>))}</div></div>
     </section>
 
     <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8"><SectionIntro index="01" label="The problem" title={<>Sound <em className="text-primary">familiar?</em></>} detail="The finance things that follow you home can be handled by someone who owns them." />
