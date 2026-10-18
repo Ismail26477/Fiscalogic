@@ -167,7 +167,7 @@ function HomePage() {
 
   return (
     <>
-      <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
+      <section className="relative isolate h-screen min-h-0 overflow-hidden border-b border-border/70 bg-navy lg:min-h-[636px] lg:max-h-screen">
         <div className="absolute inset-0 overflow-hidden" aria-live="polite">
           <div
             className="flex h-full w-full transition-transform duration-700 ease-out motion-reduce:transition-none"
@@ -188,19 +188,19 @@ function HomePage() {
             ))}
           </div>
         </div>
-        <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-start px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
+        <div className="relative mx-auto flex h-full max-w-7xl items-start px-5 pb-32 pt-20 lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
           <div className="relative z-10 max-w-2xl text-background">
             <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs">
               <Check className="size-3.5" /> {slide.eyebrow}
             </p>
-            <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
+            <h1 className="mt-5 max-w-2xl font-display text-4xl leading-[1.02] sm:mt-7 sm:text-6xl lg:text-7xl">
               {slide.title}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-background/90 sm:text-lg sm:leading-8">
+            <p className="mt-6 hidden max-w-xl text-base leading-7 text-background/90 sm:block sm:text-lg sm:leading-8">
               Fiscalogic runs your accounts, compliance and reporting end to end, so every filing
               lands on time and every number makes sense. One senior team. One fixed monthly fee.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <PrimaryLink />
               <Button
                 asChild
@@ -212,7 +212,7 @@ function HomePage() {
                 </a>
               </Button>
             </div>
-            <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-background/30 pt-6">
+            <div className="mt-9 hidden flex-wrap items-center gap-3 border-t border-background/30 pt-6 sm:flex">
               <div className="flex -space-x-2" aria-hidden="true">
                 {["C", "F", "B"].map((letter, index) => (
                   <span
@@ -233,7 +233,7 @@ function HomePage() {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-10 left-5 right-5 z-10 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:p-5 lg:right-8">
+          <div className="absolute bottom-10 left-5 right-5 z-10 hidden max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:block sm:left-auto sm:right-8 sm:p-5 lg:right-8">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <p className="font-display text-xl text-navy">Month-end, made orderly.</p>
@@ -696,20 +696,6 @@ function HomePage() {
                   <p className="mt-1 text-xs text-muted-foreground">{testimonial.role}</p>
                 </footer>
               </blockquote>
-            ))}
-          </div>
-        </div>
-        <div className="mt-5 flex justify-end">
-          <div className="flex gap-2">
-            {Array.from({ length: site.testimonials.length - 2 }, (_, index) => (
-              <button
-                key={index}
-                type="button"
-                aria-label={`Show review ${index + 1}`}
-                aria-pressed={index === activeReview}
-                onClick={() => setActiveReview(index)}
-                className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeReview ? "w-8 bg-primary" : "w-4 bg-border hover:bg-primary/50"}`}
-              />
             ))}
           </div>
         </div>
