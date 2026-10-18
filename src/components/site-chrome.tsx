@@ -44,7 +44,7 @@ export function SiteHeader() {
   }, []);
   return (
     <>
-      <header className="absolute inset-x-0 top-0 z-40 border-transparent bg-transparent transition-shadow">
+      <header className={`fixed inset-x-0 top-0 z-40 border-b transition-all duration-300 ${scrolled ? "border-background/10 bg-navy/95 shadow-lg backdrop-blur-md" : "border-transparent bg-transparent"}`}>
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 sm:flex sm:justify-between lg:px-8">
           <Wordmark light />
           <nav aria-label="Main navigation" className="hidden items-center gap-5 lg:flex">
