@@ -14,20 +14,13 @@ export function Wordmark({ light = false, compact = false }: { light?: boolean; 
   return (
     <Link to="/" className={`inline-flex items-center ${light ? "" : "font-display text-3xl font-semibold tracking-tight text-navy"}`} aria-label="Fiscalogic home">
       {light ? (
-        <span className="inline-flex flex-col leading-none text-white" aria-label="Fiscalogic — Numbers make sense">
-          <span className="flex items-center gap-1 font-display text-2xl font-semibold tracking-[0.08em] sm:text-3xl">
-            FISCAL
-            <span className="relative inline-flex h-7 w-7 items-end justify-center sm:h-8 sm:w-8" aria-hidden="true">
-              <span className="absolute bottom-0 left-0 h-2 w-1.5 bg-white sm:h-2.5" />
-              <span className="absolute bottom-0 left-2.5 h-4 w-1.5 bg-white sm:h-5" />
-              <span className="absolute bottom-0 right-0 h-6 w-1.5 bg-white sm:h-7" />
-              <span className="absolute left-0 top-1 h-1.5 w-8 -rotate-45 origin-left border-t-2 border-white sm:w-9" />
-              <span className="absolute right-0 top-0 border-b-[5px] border-l-[5px] border-b-primary border-l-transparent" />
-            </span>
-            GIC
-          </span>
-          <span className="mt-1 text-[0.48rem] font-medium tracking-[0.42em] text-white/90 sm:text-[0.55rem]">NUMBERS MAKE SENSE</span>
-        </span>
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-UtdxtwpD57GRjAtRT2uUhStfB9znAJ.png"
+          alt="Fiscalogic — Numbers make sense"
+          width={276}
+          height={67}
+          className="h-12 w-auto object-contain sm:h-14"
+        />
       ) : (
         <>
           <span>Fiscalogic</span>
