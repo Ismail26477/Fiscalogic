@@ -699,10 +699,7 @@ function HomePage() {
             ))}
           </div>
         </div>
-        <div className="mt-5 flex items-center justify-between">
-          <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            Review {activeReview + 1} of {site.testimonials.length - 2}
-          </p>
+        <div className="mt-5 flex justify-end">
           <div className="flex gap-2">
             {Array.from({ length: site.testimonials.length - 2 }, (_, index) => (
               <button
