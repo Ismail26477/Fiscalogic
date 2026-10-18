@@ -19,7 +19,7 @@ export function Wordmark({ light = false, compact = false }: { light?: boolean; 
           alt="Fiscalogic — Numbers make sense"
           width={310}
           height={98}
-          className="h-auto w-[220px] mix-blend-screen sm:w-[280px]"
+          className="h-auto w-[220px] mix-blend-screen [background:transparent] sm:w-[280px]"
         />
       ) : (
         <>
