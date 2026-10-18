@@ -167,135 +167,172 @@ function HomePage() {
 
   return (
     <>
-      <section className="relative isolate min-h-[680px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
-        <div className="absolute inset-0 overflow-hidden" aria-live="polite">
+      
+<section className="relative isolate h-[100dvh] min-h-[560px] overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
+  {/* Hero slider backgrounds */}
+  <div className="absolute inset-0 overflow-hidden" aria-live="polite">
+    <div
+      className="flex h-full w-full transition-transform duration-700 ease-out motion-reduce:transition-none"
+      style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+    >
+      {heroSlides.map((hero) => (
+        <div key={hero.image} className="relative h-full min-w-full">
+          <img
+            src={hero.image}
+            alt={hero.alt}
+            width={1536}
+            height={1024}
+            fetchPriority={hero === heroSlides[0] ? "high" : "low"}
+            className="absolute inset-0 size-full object-cover object-center"
+          />
           <div
-            className="flex h-full w-full transition-transform duration-700 ease-out motion-reduce:transition-none"
-            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-          >
-            {heroSlides.map((hero) => (
-              <div key={hero.image} className="relative h-full min-w-full">
-                <img
-                  src={hero.image}
-                  alt={hero.alt}
-                  width={1536}
-                  height={1024}
-                  fetchPriority={hero === heroSlides[0] ? "high" : "low"}
-                  className="absolute inset-0 size-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
-              </div>
-            ))}
-          </div>
+            className="absolute inset-0 bg-black/30"
+            aria-hidden="true"
+          />
         </div>
-        <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-start px-5 pb-44 pt-24 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
-          <div className="relative z-10 max-w-2xl text-background">
-            <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs">
-              <Check className="size-3.5" /> {slide.eyebrow}
-            </p>
-            <h1 className="mt-7 max-w-2xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-              {slide.title}
-            </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-background/90 sm:text-lg sm:leading-8">
-              Fiscalogic runs your accounts, compliance and reporting end to end, so every filing
-              lands on time and every number makes sense. One senior team. One fixed monthly fee.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <PrimaryLink />
-              <Button
-                asChild
-                variant="outline"
-                className="h-12 rounded-sm border-background/40 bg-background/95 px-5 text-navy hover:bg-background"
-              >
-                <a href="#how-it-works">
-                  See how we work <ArrowDown />
-                </a>
-              </Button>
-            </div>
-            <div className="mt-9 flex flex-wrap items-center gap-3 border-t border-background/30 pt-6">
-              <div className="flex -space-x-2" aria-hidden="true">
-                {["C", "F", "B"].map((letter, index) => (
-                  <span
-                    key={letter}
-                    className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${index === 1 ? "bg-soft-tint text-primary" : index === 2 ? "bg-secondary text-navy" : "bg-primary text-primary-foreground"}`}
-                  >
-                    {letter}
-                  </span>
-                ))}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-background">
-                  Trusted by growing businesses across India
-                </p>
-                <p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">
-                  ★★★★★ <span className="ml-1 text-background/70">Placeholder rating</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="absolute bottom-10 left-5 right-5 z-10 max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:p-5 lg:right-8">
-            <div className="flex items-center justify-between border-b border-border pb-3">
-              <div>
-                <p className="font-display text-xl text-navy">Month-end, made orderly.</p>
-                <p className="mt-1 font-mono text-[10px] text-muted-foreground">
-                  YOUR FINANCE DESK · THIS MONTH
-                </p>
-              </div>
-              <span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary">
-                <ShieldCheck className="size-5" />
+      ))}
+    </div>
+  </div>
+
+  {/* Hero content */}
+  <div className="relative mx-auto flex h-full min-h-0 max-w-7xl items-start overflow-y-auto px-5 pb-20 pt-20 sm:overflow-visible sm:px-8 sm:pb-32 sm:pt-24 lg:px-8">
+    <div className="relative z-10 max-w-2xl text-background">
+      <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs">
+        <Check className="size-3.5" />
+        {slide.eyebrow}
+      </p>
+
+      <h1 className="mt-5 max-w-2xl font-display text-4xl leading-[1.02] sm:mt-7 sm:text-6xl lg:text-7xl">
+        {slide.title}
+      </h1>
+
+      <p className="mt-4 max-w-xl text-sm leading-6 text-background/90 sm:mt-6 sm:text-lg sm:leading-8">
+        Fiscalogic runs your accounts, compliance and reporting end to end, so every filing
+        lands on time and every number makes sense. One senior team. One fixed monthly fee.
+      </p>
+
+      <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
+        <PrimaryLink />
+        <Button
+          asChild
+          variant="outline"
+          className="h-12 rounded-sm border-background/40 bg-background/95 px-5 text-navy hover:bg-background"
+        >
+          <a href="#how-it-works">
+            See how we work <ArrowDown />
+          </a>
+        </Button>
+      </div>
+
+      {/* Trust indicators */}
+      <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-background/30 pt-4 sm:mt-9 sm:pt-6">
+        <div className="flex -space-x-2" aria-hidden="true">
+          {["C", "F", "B"].map((letter, index) => (
+            <span
+              key={letter}
+              className={`grid size-9 place-items-center rounded-full border-2 border-background font-display text-xs ${
+                index === 1
+                  ? "bg-soft-tint text-primary"
+                  : index === 2
+                    ? "bg-secondary text-navy"
+                    : "bg-primary text-primary-foreground"
+              }`}
+            >
+              {letter}
+            </span>
+          ))}
+        </div>
+
+        <div>
+          <p className="text-sm font-medium text-background">
+            Trusted by growing businesses across India
+          </p>
+          <p className="mt-0.5 text-xs text-gold" aria-label="Five out of five stars">
+            ★★★★★ <span className="ml-1 text-background/70">Placeholder rating</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Finance summary: hidden only on mobile */}
+    <div className="absolute bottom-10 left-5 right-5 z-10 hidden max-w-xl rounded-sm border border-border bg-background/95 p-4 shadow-lg sm:left-auto sm:right-8 sm:block sm:p-5 lg:right-8">
+      <div className="flex items-center justify-between border-b border-border pb-3">
+        <div>
+          <p className="font-display text-xl text-navy">
+            Month-end, made orderly.
+          </p>
+          <p className="mt-1 font-mono text-[10px] text-muted-foreground">
+            YOUR FINANCE DESK · THIS MONTH
+          </p>
+        </div>
+        <span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary">
+          <ShieldCheck className="size-5" />
+        </span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">
+        {["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map(
+          (item) => (
+            <p key={item} className="flex items-center gap-2 text-foreground">
+              <span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary">
+                <Check className="size-3" />
               </span>
-            </div>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">
-              {["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map(
-                (item) => (
-                  <p key={item} className="flex items-center gap-2 text-foreground">
-                    <span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary">
-                      <Check className="size-3" />
-                    </span>
-                    {item}
-                  </p>
-                ),
-              )}
-            </div>
-          </div>
-          <div className="absolute bottom-32 left-5 z-20 flex items-center gap-2 sm:left-auto sm:right-8">
-            {heroSlides.map((hero, index) => (
-              <button
-                key={hero.image}
-                type="button"
-                aria-label={`Show hero slide ${index + 1}`}
-                aria-pressed={index === activeSlide}
-                onClick={() => setActiveSlide(index)}
-                className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeSlide ? "w-10 bg-primary" : "w-5 bg-background/50 hover:bg-background"}`}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border/70 bg-background/70 py-4">
-          <div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">
-            {[...Array(2)].flatMap((_, pass) =>
-              [
-                "GST",
-                "TDS",
-                "ROC Filings",
-                "PF / ESI",
-                "Payroll",
-                "Monthly Close",
-                "MIS Reports",
-                "Audit Ready",
-                "Income Tax",
-                "Company Registration",
-              ].map((item, index) => (
-                <span key={`${pass}-${item}`} className="inline-flex items-center gap-2">
-                  <Check className="size-3 text-primary" />
-                  {item}
-                  {index < 9 && <span className="ml-6 text-border">/</span>}
-                </span>
-              )),
-            )}
-          </div>
-        </div>
-      </section>
+              {item}
+            </p>
+          ),
+        )}
+      </div>
+    </div>
+
+    {/* Slide indicators */}
+    <div className="absolute bottom-[76px] left-5 z-20 flex items-center gap-2 sm:bottom-32 sm:left-auto sm:right-8">
+      {heroSlides.map((hero, index) => (
+        <button
+          key={hero.image}
+          type="button"
+          aria-label={`Show hero slide ${index + 1}`}
+          aria-pressed={index === activeSlide}
+          onClick={() => setActiveSlide(index)}
+          className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${
+            index === activeSlide
+              ? "w-10 bg-primary"
+              : "w-5 bg-background/50 hover:bg-background"
+          }`}
+        />
+      ))}
+    </div>
+  </div>
+
+  {/* Bottom ticker */}
+  <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border/70 bg-background/70 py-3 sm:py-4">
+    <div className="ticker-track flex w-max gap-8 whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-muted-foreground sm:gap-12 sm:text-xs">
+      {[...Array(2)].flatMap((_, pass) =>
+        [
+          "GST",
+          "TDS",
+          "ROC Filings",
+          "PF / ESI",
+          "Payroll",
+          "Monthly Close",
+          "MIS Reports",
+          "Audit Ready",
+          "Income Tax",
+          "Company Registration",
+        ].map((item, index) => (
+          <span
+            key={`${pass}-${item}`}
+            className="inline-flex items-center gap-2"
+          >
+            <Check className="size-3 text-primary" />
+            {item}
+            {index < 9 && <span className="ml-6 text-border">/</span>}
+          </span>
+        )),
+      )}
+    </div>
+  </div>
+</section>
+
 
       <section className="mx-auto max-w-7xl px-5 py-20 sm:py-28 lg:px-8">
         <SectionIntro
