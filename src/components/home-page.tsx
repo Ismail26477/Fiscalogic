@@ -67,16 +67,16 @@ function HomePage() {
   }, [testimonialSteps]);
 
   return <>
-    <section className="relative isolate h-[90svh] min-h-0 overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
+    <section className="relative isolate h-[100svh] min-h-0 overflow-hidden border-b border-border/70 bg-navy lg:h-screen lg:min-h-[636px] lg:max-h-screen">
       <div className="absolute inset-0 overflow-hidden" aria-live="polite">
         <div className="flex h-full w-full transition-transform duration-700 ease-out motion-reduce:transition-none" style={{ transform: `translateX(-${activeSlide * 100}%)` }}>
           {heroSlides.map((hero) => <div key={hero.image} className="relative h-full min-w-full">
-            <img src={hero.image} alt={hero.alt} width={1536} height={1024} fetchPriority={hero === heroSlides[0] ? "high" : "low"} className="absolute inset-0 size-full object-cover object-center" />
+            <img src={hero.image} alt={hero.alt} width={1536} height={1024} fetchPriority={hero === heroSlides[0] ? "high" : "low"} className="absolute inset-0 size-full object-cover object-[60%_center] lg:object-center" />
             <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
           </div>)}
         </div>
       </div>
-      <div className="relative mx-auto flex h-full w-full min-w-0 max-w-7xl items-start overflow-hidden px-5 pb-20 pt-20 lg:h-full lg:min-h-0 lg:px-8 lg:pb-32 lg:pt-24">
+      <div className="relative mx-auto flex h-full w-full min-w-0 max-w-7xl items-end overflow-hidden px-5 pb-20 pt-20 lg:h-full lg:min-h-0 lg:items-start lg:px-8 lg:pb-32 lg:pt-24">
         <div className="relative z-10 min-w-0 max-w-2xl text-background">
           <p className="inline-flex items-center gap-2 rounded-full border border-background/30 bg-black/20 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-background/90 sm:text-xs"><Check className="size-3.5" /> {slide.eyebrow}</p>
           <h1 className="mt-7 max-w-2xl break-words font-display text-[2.5rem] leading-[1.04] sm:text-6xl lg:text-7xl">{slide.title}</h1>
@@ -91,7 +91,7 @@ function HomePage() {
           <div className="flex items-center justify-between border-b border-border pb-3"><div><p className="font-display text-xl text-navy">Month-end, made orderly.</p><p className="mt-1 font-mono text-[10px] text-muted-foreground">YOUR FINANCE DESK · THIS MONTH</p></div><span className="grid size-10 place-items-center rounded-full bg-soft-tint text-primary"><ShieldCheck className="size-5" /></span></div>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 pt-4 text-xs sm:text-sm">{["Books reconciled", "GSTR-3B filed", "TDS deposited", "Payroll processed"].map((item) => <p key={item} className="flex items-center gap-2 text-foreground"><span className="grid size-5 place-items-center rounded-full bg-soft-tint text-primary"><Check className="size-3" /></span>{item}</p>)}</div>
         </div>
-        <div className="absolute bottom-32 left-5 z-20 flex items-center gap-2 sm:left-auto sm:right-8">
+        <div className="absolute bottom-7 left-5 z-20 flex items-center gap-2 sm:bottom-32 sm:left-auto sm:right-8">
           {heroSlides.map((hero, index) => <button key={hero.image} type="button" aria-label={`Show hero slide ${index + 1}`} aria-pressed={index === activeSlide} onClick={() => setActiveSlide(index)} className={`h-1.5 rounded-full transition-all motion-reduce:transition-none ${index === activeSlide ? "w-10 bg-primary" : "w-5 bg-background/50 hover:bg-background"}`} />)}
         </div>
       </div>
